@@ -1,0 +1,106 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(source ~/.zshrc)",
+      "Bash(/Users/Zhuanz/.nvm/versions/node/v22.14.0/bin/node --version)",
+      "Bash(/Users/Zhuanz/.nvm/versions/node/v22.14.0/bin/yarn dev)",
+      "Bash(git checkout -b feat/e2e-test-progress-tab)",
+      "Bash(git add .claude/settings.json .claude/skills/README.md .claude/skills/e2e-test/ CLAUDE.md components/progress-page-client.tsx components/test-report/ app/test-report/ app/api/test-report/ scripts/generate-combined-report.js)",
+      "Bash(for skill:*)",
+      "Bash(do cp:*)",
+      "Bash(done)",
+      "Bash(wc -l /Users/Zhuanz/Desktop/onlyforskills/.claude/skills/testing/web-testing/templates/*)",
+      "Bash(python3 -m json.tool /Users/Zhuanz/Desktop/onlyforskills/.claude/skills/testing/web-testing/templates/newman-collection.json)",
+      "Bash(mv agent-teams:*)",
+      "Bash(mv ai-workflow:*)",
+      "Bash(mv backend-extension:*)",
+      "Bash(mv business-prd-planner:*)",
+      "Bash(mv business-report:*)",
+      "Bash(mv context-review:*)",
+      "Bash(mv d11-frontend:*)",
+      "Bash(mv directus-schema:*)",
+      "Bash(mv e2e-test:*)",
+      "Bash(mv landing-audit:*)",
+      "Bash(mv landing-page:*)",
+      "Bash(mv meta-evaluation:*)",
+      "Bash(mv migration:*)",
+      "Bash(mv pm-comments:*)",
+      "Bash(mv rbac:*)",
+      "Bash(mv skill-creator:*)",
+      "Bash(mv team-health:*)",
+      "Bash(mv visualizer:*)",
+      "Bash(grep -E \"\\\\| \\\\`[^\\\\`]+\\\\` \\\\|\" .claude/skills/SKILL-CATALOG.md)",
+      "Bash(grep -E \"\\\\| \\\\`[^\\\\`]+\\\\` \\\\|\")",
+      "Bash(grep \"^\\\\| \\\\`\")",
+      "Bash(grep -E \"^\\\\| \\\\`[^\\\\`]+\\\\` \\\\|\")",
+      "Bash(mv api-testing:*)",
+      "Bash(mv code-review:*)",
+      "Bash(mv domain/e2e-test testing/)",
+      "Bash(find /Users/Zhuanz/Desktop/onlyforskills/.claude -name \"*.bak\" -delete)",
+      "Bash(find /Users/Zhuanz/Desktop/onlyforskills/.claude -name \"*.tmp\" -delete)",
+      "Bash(find /Users/Zhuanz/Desktop/onlyforskills/.claude -name \".DS_Store\" -delete)",
+      "Bash(for file:*)",
+      "Bash(do)",
+      "Bash(sed -i '' 's/^name: finishing-branch$/name: workflow\\\\/finishing-branch/' \"$file/SKILL.md\")",
+      "Bash(sed -i '' 's/^name: verification$/name: workflow\\\\/verification/' \"$file/SKILL.md\")",
+      "Bash(sed -i '' 's/^name: git-worktrees$/name: workflow\\\\/git-worktrees/' \"$file/SKILL.md\")",
+      "Bash(sed -i '' 's/^name: requesting-code-review$/name: workflow\\\\/requesting-code-review/' \"$file/SKILL.md\")",
+      "Bash(sed -i '' 's/^name: receiving-code-review$/name: workflow\\\\/receiving-code-review/' \"$file/SKILL.md\")",
+      "Bash(sed -i '' 's/^name: writing-skills$/name: workflow\\\\/writing-skills/' \"$file/SKILL.md\")",
+      "Bash(cp /Users/Zhuanz/Desktop/onlyforskills/.claude/skills/core/onboard/SKILL.md /Users/Zhuanz/Desktop/onlyforskills/.claude/skills/onboard/)",
+      "Bash(cp /Users/Zhuanz/Desktop/onlyforskills/.claude/skills/core/router/SKILL.md /Users/Zhuanz/Desktop/onlyforskills/.claude/skills/router/)",
+      "Skill(web-testing)",
+      "Skill(web-testing:*)",
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [
+      "Bash(git commit*--no-verify*)"
+    ],
+    "additionalDirectories": [
+      "/Users/Zhuanz/Desktop/onlyforskills/.claude/skills/core",
+      "/Users/Zhuanz/Desktop/onlyforskills/.claude/skills/core/onboard",
+      "/Users/Zhuanz/Desktop/onlyforskills/.claude/skills",
+      "/Users/Zhuanz/Desktop/onlyforskills/.claude/skills/testing/web-testing",
+      "/Users/Zhuanz/Desktop/onlyforskills/.claude/skills/design",
+      "/Users/Zhuanz/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.0.1",
+      "/Users/Zhuanz/Desktop/onlyforskills/.claude/skills/workflow"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/pre-bash.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/post-edit-lint.sh"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'CRITICAL RULES (post-compaction): Read .claude/rules/core.md for Rules 0-9. Domain rules auto-load from .claude/rules/ when editing matching files. Enforcement: types > guards > lints > hooks > rules > docs. Read CARD-CONTEXT-LATEST for session state.'"
+          }
+        ]
+      }
+    ]
+  }
+}
