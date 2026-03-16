@@ -39,27 +39,34 @@ Monorepo: Next.js frontend + Directus 11 backend. Domain-specific rules in `.cla
 
 ```
 /
-├── .claude/                 # Skills, rules, hooks (shared)
-├── frontend/                # Next.js app
-│   ├── app/                 # App router pages
-│   ├── components/          # UI components
-│   ├── lib/                 # Utilities, API clients, hooks
-│   ├── stores/              # Zustand stores (org-store.ts)
-│   └── public/              # Static assets, locales
-├── backend/                 # Directus 11
-│   ├── extensions/          # Custom extensions
+├── .claude/                    # Skills, rules, hooks (shared)
+├── docs/                       # Cross-cutting documentation
+│   ├── prds/PRD-*.md           # Product Requirements
+│   ├── stories/{US,AS}-*.md    # User Stories
+│   ├── cards/CARD-*.md         # Technical Cards
+│   └── integration/            # Integration Runbooks
+├── frontend/                   # Next.js app
+│   ├── app/                    # App router pages
+│   ├── components/             # UI components
+│   ├── lib/                    # Utilities, API clients, hooks
+│   ├── stores/                 # Zustand stores (org-store.ts)
+│   ├── public/                 # Static assets, locales
+│   └── package.json
+├── backend/                    # Directus 11
+│   ├── extensions/             # Custom extensions
 │   │   └── directus-extension-*/
-│   ├── uploads/             # User files (gitignored)
-│   └── .env                 # Backend env (gitignored)
-├── docs/
-│   ├── prds/PRD-*.md        # Product Requirements
-│   ├── stories/{US,AS}-*.md # User Stories
-│   ├── cards/CARD-*.md      # Technical Cards
-│   └── integration/         # Integration Runbooks
-├── migrations/
-│   └── REGISTRY.md          # Migration audit trail
-├── snapshots/               # Schema snapshots (before/after)
-└── scripts/                 # Migration & seed scripts
+│   ├── migrations/             # Schema migration registry
+│   │   └── REGISTRY.md
+│   ├── snapshots/              # Schema snapshots (before/after)
+│   ├── scripts/                # Seed data, collection creation
+│   ├── uploads/                # User files (gitignored)
+│   ├── .env                    # Backend env (gitignored)
+│   └── package.json
+├── scripts/                    # Cross-cutting (sync, deploy)
+├── docker-compose.yml          # Orchestrates Postgres + D11 + Next.js
+├── package.json                # Workspace root (yarn workspaces)
+├── CLAUDE.md
+└── .gitignore
 ```
 
 ---
@@ -97,6 +104,10 @@ Monorepo: Next.js frontend + Directus 11 backend. Domain-specific rules in `.cla
 | Frontend components | `frontend/components/` |
 | Org store | `frontend/stores/org-store.ts` |
 | Backend extensions | `backend/extensions/directus-extension-*` |
+| Migrations | `backend/migrations/REGISTRY.md` |
+| Snapshots | `backend/snapshots/` |
+| Seed/collection scripts | `backend/scripts/` |
+| Cross-cutting scripts | `scripts/` |
 | Lint scripts | `.claude/hooks/lint-*.sh` |
 | Rules | `.claude/rules/*.md` |
 
