@@ -14,10 +14,12 @@ KNOWN_ERRORS=3  # prd-loader:227, prd-loader:240, story-loader:147
 
 echo "Running tsc --noEmit (filtering to critical files)..."
 
-# Need nvm for npx
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-nvm use 22 >/dev/null 2>&1
+# Ensure Node is available (works with nvm, fnm, or system node)
+if command -v nvm &>/dev/null; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  nvm use 22 >/dev/null 2>&1
+fi
 
 OUTPUT=$(npx tsc --noEmit 2>/dev/null | grep -E "^($CRITICAL_FILES)")
 COUNT=$(echo "$OUTPUT" | grep -c "error TS" 2>/dev/null || echo 0)

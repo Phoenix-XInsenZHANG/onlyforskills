@@ -10,7 +10,7 @@ COMMAND=$(echo "$INPUT" | python3 -c "import sys,json; print(json.load(sys.stdin
 
 # Check 1: Node/npm/npx commands without nvm
 if echo "$COMMAND" | grep -qE '(^|\s)(node|npm|npx)\s' && ! echo "$COMMAND" | grep -q 'nvm use'; then
-  echo "HOOK REMINDER: This command uses node/npm/npx. Ensure 'nvm use 22' has been run in this session. If not, prepend: export NVM_DIR=\"\$HOME/.nvm\" && [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\" && nvm use 22 &&"
+  echo "HOOK REMINDER: This command uses node/npm/npx. Ensure the correct Node version is available in this session."
 fi
 
 # Check 2: Migration-related commands without snapshot

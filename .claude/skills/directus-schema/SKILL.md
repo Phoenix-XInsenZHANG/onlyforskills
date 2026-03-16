@@ -55,7 +55,7 @@ This project uses **dual Directus architecture**:
 | Environment | Version | Purpose | Location |
 |-------------|---------|---------|----------|
 | **orq-dev** | Directus 9 | Legacy, SMS/Email auth | Production (old) |
-| **d11** | Directus 11 | Modern, OAuth support | `/Users/mac/projects/d11` |
+| **d11** | Directus 11 | Modern, OAuth support | `./backend` (or ask user) |
 
 **Important**: Schema migrations are developed on **d11** (Directus 11).
 
@@ -69,7 +69,7 @@ This project uses **dual Directus architecture**:
 
 **Pattern**: Modular extension architecture documented in OAuth implementation
 
-**Example**: `/Users/mac/projects/d11/extensions/directus-extension-oauth/`
+**Example**: `./backend/extensions/directus-extension-oauth/`
 
 **Key Learnings**:
 1. Separate schema (migrations) from logic (extension)
@@ -115,7 +115,7 @@ npx directus schema apply snapshots/009-users-multi-timestamps-after.yaml
 1. **Ask for Directus backend location first**:
    ```
    Where is your Directus backend located?
-   - Default: /Users/mac/projects/d11
+   - Default: ./backend
    - Or specify your custom path
    ```
 
@@ -154,7 +154,7 @@ Question 2: Do you have a Directus Admin Token?
   Settings → Access Tokens → Create Token (with Admin role)
 
 Question 3: Where is your Directus backend located? (for snapshots)
-- Default: /Users/mac/projects/d11
+- Default: ./backend
 - Or specify your custom path
 ```
 
@@ -200,10 +200,10 @@ Question 5: Should it have organization (orq) relation?
 ```bash
 # Directus 11 uses specific Node version
 bash -c 'source ~/.nvm/nvm.sh && \
-  cd /Users/mac/projects/d11 && \
+  cd ./backend && \
   nvm use 22.22.0 && \
   npx directus schema snapshot \
-  /Users/mac/Downloads/saas-sales-order/snapshots/NNN-description-before.yaml'
+  ./snapshots/NNN-description-before.yaml'
 ```
 
 #### Step 6: Create Migration Script
@@ -278,7 +278,7 @@ Would you like me to take a schema snapshot?
 
 Snapshot command (run from Directus backend):
 cd {DIRECTUS_PATH} && npx directus schema snapshot \
-  /Users/mac/Downloads/saas-sales-order/snapshots/NNN-description-after.yaml
+  ./snapshots/NNN-description-after.yaml
 ```
 
 **Why Ask User Instead of Automating:**
@@ -409,7 +409,7 @@ Use `--force` when:
 
 ## Full Migration Guide
 
-**Complete documentation**: `/Users/mac/Downloads/saas-sales-order/migrations/README.md`
+**Complete documentation**: `./migrations/README.md`
 
 ---
 

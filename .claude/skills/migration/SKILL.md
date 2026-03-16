@@ -52,7 +52,7 @@ ls -la snapshots/{NNN}-*
 ### Step 3: Ask D11 Location
 
 Use `AskUserQuestion`:
-- Default: `/Users/mac/projects/d11`
+- Default: `./backend`
 - Or custom path
 
 ### Step 4: Take Before Snapshot (if migration not yet applied)
@@ -60,7 +60,7 @@ Use `AskUserQuestion`:
 ```bash
 source ~/.nvm/nvm.sh && cd {D11_PATH} && nvm use 22.22.0 && \
   npx directus schema snapshot \
-  /Users/mac/Downloads/saas-sales-order/snapshots/{NNN}-{name}-before.yaml
+  ./snapshots/{NNN}-{name}-before.yaml
 ```
 
 ### Step 5: Run Migration Script
@@ -75,7 +75,7 @@ source ~/.nvm/nvm.sh && nvm use 20 && \
 ```bash
 source ~/.nvm/nvm.sh && cd {D11_PATH} && nvm use 22.22.0 && \
   npx directus schema snapshot \
-  /Users/mac/Downloads/saas-sales-order/snapshots/{NNN}-{name}-after.yaml
+  ./snapshots/{NNN}-{name}-after.yaml
 ```
 
 ### Step 7: Update Registry
@@ -107,14 +107,14 @@ Next number = highest + 1
 Use `AskUserQuestion`:
 1. What to create? (collection/field/relation)
 2. Collection name?
-3. D11 path (default: `/Users/mac/projects/d11`)
+3. D11 path (default: `./backend`)
 
 ### Step 3: Take Before Snapshot (MANDATORY - DO NOT SKIP)
 
 ```bash
 source ~/.nvm/nvm.sh && cd {D11_PATH} && nvm use 22.22.0 && \
   npx directus schema snapshot \
-  /Users/mac/Downloads/saas-sales-order/snapshots/{NNN}-{name}-before.yaml
+  ./snapshots/{NNN}-{name}-before.yaml
 ```
 
 ### Step 4: Create Migration Script
@@ -135,7 +135,7 @@ source ~/.nvm/nvm.sh && nvm use 20 && \
 ```bash
 source ~/.nvm/nvm.sh && cd {D11_PATH} && nvm use 22.22.0 && \
   npx directus schema snapshot \
-  /Users/mac/Downloads/saas-sales-order/snapshots/{NNN}-{name}-after.yaml
+  ./snapshots/{NNN}-{name}-after.yaml
 ```
 
 ### Step 7: Update Registry
@@ -166,7 +166,7 @@ ls -la scripts/collections/*{name}*
 ```bash
 source ~/.nvm/nvm.sh && cd {D11_PATH} && nvm use 22.22.0 && \
   npx directus schema snapshot \
-  /Users/mac/Downloads/saas-sales-order/snapshots/{filename}.yaml
+  ./snapshots/{filename}.yaml
 ```
 
 ---
@@ -178,7 +178,7 @@ source ~/.nvm/nvm.sh && cd {D11_PATH} && nvm use 22.22.0 && \
 | Directus CLI (snapshots) | 22.22.0 | `cd {D11_PATH} && nvm use 22.22.0` |
 | Migration scripts (tsx) | 20 | `nvm use 20` |
 
-**D11 Default Path**: `/Users/mac/projects/d11`
+**D11 Default Path**: `./backend`
 
 ---
 
