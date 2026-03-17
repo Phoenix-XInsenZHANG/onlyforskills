@@ -49,7 +49,17 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'CRITICAL RULES (post-compaction): Read .claude/rules/core.md for Rules 0-9. Domain rules auto-load from .claude/rules/ when editing matching files. Enforcement: types > guards > lints > hooks > rules > docs. Read CARD-CONTEXT-LATEST for session state.'"
+            "command": "echo 'CRITICAL RULES (post-compaction): Read .claude/rules/core.md for Rules 0-9. Domain rules auto-load from .claude/rules/ when editing matching files. Enforcement: types > guards > lints > hooks > rules > docs.'"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '⛔ MANDATORY SKILL ACTIVATION — NO EXCEPTIONS:\nYou MUST activate a skill via Skill() tool before writing ANY response.\n1. SCAN available skills for matches\n2. If a specialized skill matches → activate it\n3. If NO specialized skill matches → activate general skill\n4. NEVER respond without loading a skill first\nVIOLATION: Writing code, prose, or answers without an active skill is FORBIDDEN.'"
           }
         ]
       }

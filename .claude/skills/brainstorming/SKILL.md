@@ -1,17 +1,36 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation. Outputs PRD → Story → Card 3-layer documents following ai-workflow."
 ---
 
 # Brainstorming Ideas Into Designs
 
-Help turn ideas into fully formed designs and specs through natural collaborative dialogue.
+Help turn ideas into fully formed designs through natural collaborative dialogue, then output as **PRD → Story → Card** 3-layer documents.
 
 Start by understanding the current project context, then ask questions one at a time to refine the idea. Once you understand what you're building, present the design and get user approval.
 
 <HARD-GATE>
 Do NOT invoke any implementation skill, write any code, scaffold any project, or take any implementation action until you have presented a design and the user has approved it. This applies to EVERY project regardless of perceived simplicity.
 </HARD-GATE>
+
+## Integration with ai-workflow
+
+**This skill outputs documents following the ai-workflow 3-layer system:**
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  Brainstorming Output                        │
+├─────────────────────────────────────────────────────────────┤
+│  Layer 1: PRD   → docs/prds/PRD-{FEATURE}.md                │
+│  Layer 2: Story → docs/stories/US-{PRD-PREFIX}-{NNN}.md     │
+│  Layer 3: Card  → docs/cards/CARD-{PRD-PREFIX}-{NNN}.md     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**All documents follow ai-workflow templates:**
+- PRD: `ai-workflow/references/prd-template.md`
+- Story: `ai-workflow/references/story-template.md`
+- Card: `ai-workflow/references/card-template-v2.md`
 
 ## Anti-Pattern: "This Is Too Simple To Need A Design"
 
@@ -26,10 +45,9 @@ You MUST create a task for each of these items and complete them in order:
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
-7. **Spec review loop** — dispatch spec-document-reviewer subagent with precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
-8. **User reviews written spec** — ask user to review the spec file before proceeding
-9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+6. **Write 3-layer documents** — create PRD, Stories, and Cards following ai-workflow templates
+7. **Document review** — ask user to review before proceeding
+8. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ## Process Flow
 
@@ -37,32 +55,31 @@ You MUST create a task for each of these items and complete them in order:
 digraph brainstorming {
     "Explore project context" [shape=box];
     "Visual questions ahead?" [shape=diamond];
-    "Offer Visual Companion\n(own message, no other content)" [shape=box];
+    "Offer Visual Companion" [shape=box];
     "Ask clarifying questions" [shape=box];
     "Propose 2-3 approaches" [shape=box];
     "Present design sections" [shape=box];
     "User approves design?" [shape=diamond];
-    "Write design doc" [shape=box];
-    "Spec review loop" [shape=box];
-    "Spec review passed?" [shape=diamond];
-    "User reviews spec?" [shape=diamond];
+    "Create PRD document" [shape=box];
+    "Create Story documents" [shape=box];
+    "Create Card documents" [shape=box];
+    "User reviews docs?" [shape=diamond];
     "Invoke writing-plans skill" [shape=doublecircle];
 
     "Explore project context" -> "Visual questions ahead?";
-    "Visual questions ahead?" -> "Offer Visual Companion\n(own message, no other content)" [label="yes"];
+    "Visual questions ahead?" -> "Offer Visual Companion" [label="yes"];
     "Visual questions ahead?" -> "Ask clarifying questions" [label="no"];
-    "Offer Visual Companion\n(own message, no other content)" -> "Ask clarifying questions";
+    "Offer Visual Companion" -> "Ask clarifying questions";
     "Ask clarifying questions" -> "Propose 2-3 approaches";
     "Propose 2-3 approaches" -> "Present design sections";
     "Present design sections" -> "User approves design?";
     "User approves design?" -> "Present design sections" [label="no, revise"];
-    "User approves design?" -> "Write design doc" [label="yes"];
-    "Write design doc" -> "Spec review loop";
-    "Spec review loop" -> "Spec review passed?";
-    "Spec review passed?" -> "Spec review loop" [label="issues found,\nfix and re-dispatch"];
-    "Spec review passed?" -> "User reviews spec?" [label="approved"];
-    "User reviews spec?" -> "Write design doc" [label="changes requested"];
-    "User reviews spec?" -> "Invoke writing-plans skill" [label="approved"];
+    "User approves design?" -> "Create PRD document" [label="yes"];
+    "Create PRD document" -> "Create Story documents";
+    "Create Story documents" -> "Create Card documents";
+    "Create Card documents" -> "User reviews docs?";
+    "User reviews docs?" -> "Create PRD document" [label="changes requested"];
+    "User reviews docs?" -> "Invoke writing-plans skill" [label="approved"];
 }
 ```
 
@@ -109,28 +126,118 @@ digraph brainstorming {
 
 ## After the Design
 
-**Documentation:**
+**Create 3-Layer Documents:**
 
-- Write the validated design (spec) to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
-  - (User preferences for spec location override this default)
-- Use elements-of-style:writing-clearly-and-concisely skill if available
-- Commit the design document to git
+### Step 1: Create PRD
 
-**Spec Review Loop:**
-After writing the spec document:
+Create `docs/prds/PRD-{FEATURE-NAME}.md` with YAML frontmatter:
 
-1. Dispatch spec-document-reviewer subagent (see spec-document-reviewer-prompt.md)
-2. If Issues Found: fix, re-dispatch, repeat until Approved
-3. If loop exceeds 5 iterations, surface to human for guidance
+```yaml
+---
+id: "PRD-FEATURE-NAME"             # PRD- prefix + UPPERCASE
+title: "Feature Title"
+description: "Brief description"
+status: "draft"                    # draft | pending | in-progress | done | blocked | ready
+pattern: discovery-driven          # collection-driven | discovery-driven | requirements-first
+keyLearning: "Main insight from design"
+project: ww                        # ww | rk | vec | foundation | *
+stories: []                        # Will be filled after creating stories
+cards: []                          # Will be filled after creating cards
+verification:
+  codeExists: false
+  prdAccurate: unknown
+  testsExist: false
+  lastVerified: null
+---
+```
 
-**User Review Gate:**
-After the spec review loop passes, ask the user to review the written spec before proceeding:
+### Step 2: Create Stories
 
-> "Spec written and committed to `<path>`. Please review it and let me know if you want to make any changes before we start writing out the implementation plan."
+For each user capability identified in the design, create `docs/stories/US-{PRD-PREFIX}-{NNN}.md`:
 
-Wait for the user's response. If they request changes, make them and re-run the spec review loop. Only proceed once the user approves.
+```yaml
+---
+id: US-{PRD-PREFIX}-{NNN}
+title: User can [action]
+description: [Brief description]
+parent_prd: PRD-{FEATURE-NAME}
+cards: []                          # Will be filled after creating cards
+status: backlog
+acceptance_criteria:
+  - [Criterion 1]
+  - [Criterion 2]
+---
+```
 
-**Implementation:**
+**Story naming convention:**
+- Use PRD prefix to group related stories
+- Number sequentially within the PRD
+- Example: `US-AUTH-001`, `US-AUTH-002` for `PRD-USER-AUTH`
+
+### Step 3: Create Cards
+
+For each technical task identified in the design, create `docs/cards/CARD-{PRD-PREFIX}-{NNN}.md`:
+
+```yaml
+---
+id: CARD-{PRD-PREFIX}-{NNN}
+title: Implement [specific task]
+description: [Brief description]
+parent_story: US-{PRD-PREFIX}-{NNN}
+parent_prd: PRD-{FEATURE-NAME}
+status: backlog
+priority: high | medium | low
+estimate: Xh
+implementation_checklist:
+  - [Task 1]
+  - [Task 2]
+files_to_modify:
+  - path/to/file.ts
+---
+```
+
+**Card naming convention:**
+- Use PRD prefix to match parent story
+- Number sequentially
+- Example: `CARD-AUTH-001`, `CARD-AUTH-002` for `US-AUTH-001`
+
+### Step 4: Update Links
+
+After creating all documents, update the links:
+
+1. **PRD** → Add story IDs to `stories: []` array
+2. **PRD** → Add card IDs to `cards: []` array
+3. **Stories** → Add card IDs to `cards: []` array
+
+### Step 5: Commit
+
+Commit all documents together:
+
+```bash
+git add docs/prds/PRD-*.md docs/stories/US-*.md docs/cards/CARD-*.md
+git commit -m "docs: Add PRD-XXX with stories and cards from brainstorming
+
+- PRD: Feature overview and architecture
+- Stories: US-XXX-001 to US-XXX-NNN
+- Cards: CARD-XXX-001 to CARD-XXX-NNN
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+```
+
+## User Review Gate
+
+After creating all documents, ask the user to review:
+
+> "Documents created:
+> - **PRD**: `docs/prds/PRD-XXX.md`
+> - **Stories**: `docs/stories/US-XXX-*.md` (N files)
+> - **Cards**: `docs/cards/CARD-XXX-*.md` (M files)
+>
+> Please review them and let me know if you want to make any changes before we start writing the implementation plan."
+
+Wait for the user's response. If they request changes, make them. Only proceed once the user approves.
+
+## Implementation
 
 - Invoke the writing-plans skill to create a detailed implementation plan
 - Do NOT invoke any other skill. writing-plans is the next step.
@@ -143,6 +250,7 @@ Wait for the user's response. If they request changes, make them and re-run the 
 - **Explore alternatives** - Always propose 2-3 approaches before settling
 - **Incremental validation** - Present design, get approval before moving on
 - **Be flexible** - Go back and clarify when something doesn't make sense
+- **3-layer output** - Always create PRD → Story → Card documents
 
 ## Visual Companion
 

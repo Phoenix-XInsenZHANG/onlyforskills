@@ -10,6 +10,8 @@
 |-------|--------|------|
 | `router` | /router, 用什么skill, 帮我 | 智能路由，分析意图推荐 skill |
 | `onboard` | /onboard, 新手, 怎么开始 | 新人引导，检测项目推荐工作流 |
+| `general` | 通用, general | 通用 catch-all，无专用 skill 时使用 |
+| `progress` | /progress, 进度 | Agent 团队进度编排与洞察 |
 
 ---
 
@@ -142,6 +144,7 @@
 | `business-report` | /business-report | 商业报告 |
 | `meta-evaluation` | /meta-evaluation | 元评估 |
 | `context-review` | /context-review | 上下文审查 |
+| `fresh-dev-onboarding` | /fresh-dev-onboarding | 新开发者入职 |
 
 ---
 
