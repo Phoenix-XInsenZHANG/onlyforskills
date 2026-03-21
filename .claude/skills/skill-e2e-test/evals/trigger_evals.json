@@ -1,0 +1,639 @@
+[
+  {
+    "skill": "pdf",
+    "queries": [
+      {"query": "把这份报告保存成 PDF 文件", "should_trigger": true},
+      {"query": "从这个 PDF 里提取所有表格数据", "should_trigger": true},
+      {"query": "把三个 PDF 合并成一个", "should_trigger": true},
+      {"query": "这个 PDF 有多少页", "should_trigger": true},
+      {"query": "帮我写一段 Python 代码", "should_trigger": false},
+      {"query": "把数据整理成 Excel 表格", "should_trigger": false},
+      {"query": "帮我设计一个登录页面", "should_trigger": false},
+      {"query": "分析这个 API 的响应格式", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "xlsx",
+    "queries": [
+      {"query": "把这些数据整理成 Excel 表格", "should_trigger": true},
+      {"query": "读取这个 xlsx 文件里的销售数据", "should_trigger": true},
+      {"query": "在这个表格里加一列计算利润率", "should_trigger": true},
+      {"query": "修复这个 Excel 文件里的 #REF! 错误", "should_trigger": true},
+      {"query": "帮我写一封邮件", "should_trigger": false},
+      {"query": "把报告导出成 PDF", "should_trigger": false},
+      {"query": "帮我调试这段代码", "should_trigger": false},
+      {"query": "设计一个 API 接口", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "docx",
+    "queries": [
+      {"query": "帮我写一份项目报告，保存成 Word 文档", "should_trigger": true},
+      {"query": "把这个 .docx 文件里的内容提取出来", "should_trigger": true},
+      {"query": "在这份合同文档里替换所有甲方名称", "should_trigger": true},
+      {"query": "帮我把报告整理成 Word 格式", "should_trigger": true},
+      {"query": "这段代码有什么问题", "should_trigger": false},
+      {"query": "帮我分析这个数据库设计", "should_trigger": false},
+      {"query": "把数据做成 Excel 表", "should_trigger": false},
+      {"query": "写一个 Python 脚本", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "frontend-design",
+    "queries": [
+      {"query": "帮我设计一个用户登录页面", "should_trigger": true},
+      {"query": "做一个产品展示的落地页", "should_trigger": true},
+      {"query": "帮我写一个 React 的导航组件", "should_trigger": true},
+      {"query": "这个网站的 UI 太丑了，帮我重新设计", "should_trigger": true},
+      {"query": "帮我写一个 Python 数据处理脚本", "should_trigger": false},
+      {"query": "分析这个 REST API 的设计", "should_trigger": false},
+      {"query": "把数据导入 Excel", "should_trigger": false},
+      {"query": "帮我查找这个 bug 的原因", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "web-testing",
+    "queries": [
+      {"query": "用 Playwright 测试这个登录流程", "should_trigger": true},
+      {"query": "帮我写 E2E 测试覆盖购物车功能", "should_trigger": true},
+      {"query": "这个按钮点击后没有反应，帮我写测试复现", "should_trigger": true},
+      {"query": "用浏览器自动化测试注册流程", "should_trigger": true},
+      {"query": "帮我测试这个 API 的响应", "should_trigger": false},
+      {"query": "检查这段代码的逻辑", "should_trigger": false},
+      {"query": "帮我设计数据库 schema", "should_trigger": false},
+      {"query": "生成一份测试报告 PDF", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "api-testing",
+    "queries": [
+      {"query": "测试这个 REST API 的所有端点", "should_trigger": true},
+      {"query": "帮我写 API 接口测试，验证状态码和响应体", "should_trigger": true},
+      {"query": "这个 POST /users 接口返回了 500，帮我测试复现", "should_trigger": true},
+      {"query": "用 curl 验证这个接口的认证是否正常", "should_trigger": true},
+      {"query": "帮我写一个登录页面", "should_trigger": false},
+      {"query": "把数据导出成 Excel", "should_trigger": false},
+      {"query": "用 Playwright 测试用户界面", "should_trigger": false},
+      {"query": "帮我调试这段 Python 代码", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "debugging",
+    "queries": [
+      {"query": "这个函数有 bug，帮我找出原因", "should_trigger": true},
+      {"query": "代码运行报错 TypeError，帮我排查", "should_trigger": true},
+      {"query": "这个接口偶尔返回 null，没法稳定复现", "should_trigger": true},
+      {"query": "帮我系统性地分析这个 crash 的根本原因", "should_trigger": true},
+      {"query": "帮我设计一个新功能", "should_trigger": false},
+      {"query": "把报告导出成 PDF", "should_trigger": false},
+      {"query": "写 E2E 测试覆盖这个流程", "should_trigger": false},
+      {"query": "帮我重构这段代码结构", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "tdd",
+    "queries": [
+      {"query": "用 TDD 方式实现用户注册功能", "should_trigger": true},
+      {"query": "先写测试，再实现这个计算折扣的函数", "should_trigger": true},
+      {"query": "帮我按测试驱动开发来做这个需求", "should_trigger": true},
+      {"query": "写一个失败的测试，然后让它通过", "should_trigger": true},
+      {"query": "帮我设计 API 接口文档", "should_trigger": false},
+      {"query": "帮我排查这个 bug", "should_trigger": false},
+      {"query": "做一个网页的 UI", "should_trigger": false},
+      {"query": "把数据整理成表格", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "brainstorming",
+    "queries": [
+      {"query": "我想做一个会员积分系统，帮我想想怎么设计", "should_trigger": true},
+      {"query": "这个功能有几种方案？帮我分析优劣", "should_trigger": true},
+      {"query": "帮我头脑风暴一下这个产品的核心卖点", "should_trigger": true},
+      {"query": "我想加一个通知系统，先帮我探索下可能的方向", "should_trigger": true},
+      {"query": "帮我把这个文件转成 PDF", "should_trigger": false},
+      {"query": "运行这个项目的测试套件", "should_trigger": false},
+      {"query": "这段代码为什么报错了", "should_trigger": false},
+      {"query": "帮我写一个 SQL 查询", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "writing-plans",
+    "queries": [
+      {"query": "帮我写一个实现计划，要做用户认证模块", "should_trigger": true},
+      {"query": "这个需求比较复杂，先出个技术方案", "should_trigger": true},
+      {"query": "帮我规划一下这个功能的开发步骤", "should_trigger": true},
+      {"query": "我需要一个详细的实施计划，包括分工和里程碑", "should_trigger": true},
+      {"query": "帮我调试这个报错", "should_trigger": false},
+      {"query": "跑一下单元测试", "should_trigger": false},
+      {"query": "把这个表格数据导出成 CSV", "should_trigger": false},
+      {"query": "帮我做一个登录页面的 UI", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "executing-plans",
+    "queries": [
+      {"query": "计划已经写好了，开始执行吧", "should_trigger": true},
+      {"query": "按照 task_plan.md 里的步骤开始实现", "should_trigger": true},
+      {"query": "执行之前写的开发计划", "should_trigger": true},
+      {"query": "plan 已经审批通过了，开始 coding", "should_trigger": true},
+      {"query": "帮我写一份开发计划", "should_trigger": false},
+      {"query": "帮我头脑风暴一下方案", "should_trigger": false},
+      {"query": "跑测试看看有没有 fail 的", "should_trigger": false},
+      {"query": "帮我 review 这段代码", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "planning",
+    "queries": [
+      {"query": "帮我用文件来管理这个任务的进度", "should_trigger": true},
+      {"query": "创建一个 task_plan.md 来追踪这个项目", "should_trigger": true},
+      {"query": "这个任务比较大，帮我建立 Manus-style 的计划文件", "should_trigger": true},
+      {"query": "帮我把这个需求拆解到 findings.md 和 progress.md 里", "should_trigger": true},
+      {"query": "帮我写一个 React 组件", "should_trigger": false},
+      {"query": "把这个文档转成 Word 格式", "should_trigger": false},
+      {"query": "帮我排查为什么接口返回 404", "should_trigger": false},
+      {"query": "跑一下 Playwright 测试", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "dispatching-parallel-agents",
+    "queries": [
+      {"query": "这几个任务互相不依赖，帮我并行处理", "should_trigger": true},
+      {"query": "用多个 agent 同时跑这些独立的子任务", "should_trigger": true},
+      {"query": "帮我分发这些工作到并行的子 agent 上", "should_trigger": true},
+      {"query": "这三件事可以同时做，dispatch parallel agents", "should_trigger": true},
+      {"query": "帮我写一个函数计算阶乘", "should_trigger": false},
+      {"query": "把这个 PDF 里的表格提取出来", "should_trigger": false},
+      {"query": "帮我做一个登录页", "should_trigger": false},
+      {"query": "这段代码有 bug 帮我查一下", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "subagent-driven-development",
+    "queries": [
+      {"query": "用 subagent 驱动开发来实现这个功能", "should_trigger": true},
+      {"query": "帮我把任务分给多个子 agent 分别开发", "should_trigger": true},
+      {"query": "用多个 agent 协作来做这个模块", "should_trigger": true},
+      {"query": "这个任务可以用 subagent 方式并行写代码", "should_trigger": true},
+      {"query": "帮我写一个 Excel 报表", "should_trigger": false},
+      {"query": "调试这个 500 错误", "should_trigger": false},
+      {"query": "帮我做个产品介绍页面", "should_trigger": false},
+      {"query": "合并这两个 PDF 文件", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "git-worktrees",
+    "queries": [
+      {"query": "帮我创建一个 git worktree 隔离开发", "should_trigger": true},
+      {"query": "这个功能需要隔离环境，用 worktree 开发", "should_trigger": true},
+      {"query": "在 worktree 里做这个 feature branch", "should_trigger": true},
+      {"query": "帮我设置一个独立的 worktree 来修这个 bug", "should_trigger": true},
+      {"query": "帮我写一段代码处理 CSV 文件", "should_trigger": false},
+      {"query": "测试这个 API 接口", "should_trigger": false},
+      {"query": "帮我设计一个表单组件", "should_trigger": false},
+      {"query": "把这些数据生成图表", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "finishing-branch",
+    "queries": [
+      {"query": "代码写完了测试也过了，准备合并", "should_trigger": true},
+      {"query": "这个 branch 开发完了，帮我收尾", "should_trigger": true},
+      {"query": "功能实现完毕，帮我决定怎么集成到主分支", "should_trigger": true},
+      {"query": "所有测试通过，准备创建 PR 合入 main", "should_trigger": true},
+      {"query": "帮我写一个新功能的实现计划", "should_trigger": false},
+      {"query": "帮我头脑风暴一下设计方案", "should_trigger": false},
+      {"query": "运行 E2E 测试看看哪个失败了", "should_trigger": false},
+      {"query": "帮我从 PDF 提取数据", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "verification",
+    "queries": [
+      {"query": "帮我验证一下这个改动是否真的修好了", "should_trigger": true},
+      {"query": "在提交之前跑一遍检查确认没问题", "should_trigger": true},
+      {"query": "代码改好了，帮我跑验证确保没有 regression", "should_trigger": true},
+      {"query": "我觉得修好了，帮我确认一下再 commit", "should_trigger": true},
+      {"query": "帮我设计一个新的数据模型", "should_trigger": false},
+      {"query": "把这份文档转成 PPT", "should_trigger": false},
+      {"query": "帮我头脑风暴产品方向", "should_trigger": false},
+      {"query": "帮我创建一个 Directus 的 collection", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "requesting-code-review",
+    "queries": [
+      {"query": "功能做完了，帮我发起 code review", "should_trigger": true},
+      {"query": "帮我检查一下这次改动的代码质量", "should_trigger": true},
+      {"query": "这个 PR 准备好了，跑一遍代码审查", "should_trigger": true},
+      {"query": "帮我 review 一下我写的代码，看有没有问题", "should_trigger": true},
+      {"query": "帮我写一个排序算法", "should_trigger": false},
+      {"query": "帮我创建一个 Excel 报表", "should_trigger": false},
+      {"query": "调试这个接口返回的数据格式不对", "should_trigger": false},
+      {"query": "帮我部署到生产环境", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "receiving-code-review",
+    "queries": [
+      {"query": "reviewer 给了反馈，帮我看看怎么改", "should_trigger": true},
+      {"query": "code review 的意见我不太理解，帮我分析", "should_trigger": true},
+      {"query": "有人在 PR 上提了几个 comment，帮我处理", "should_trigger": true},
+      {"query": "review 反馈说要重构这段逻辑，帮我评估", "should_trigger": true},
+      {"query": "帮我写一个新的 API 端点", "should_trigger": false},
+      {"query": "把数据做成饼图", "should_trigger": false},
+      {"query": "帮我设计一个缓存方案", "should_trigger": false},
+      {"query": "这个 PDF 有乱码帮我修复", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "code-review",
+    "queries": [
+      {"query": "帮我 review 这个 PR #42 的改动", "should_trigger": true},
+      {"query": "对这次提交做一个系统性的代码审查", "should_trigger": true},
+      {"query": "帮我看看这个 pull request 有没有安全问题", "should_trigger": true},
+      {"query": "review 一下最近的 git diff", "should_trigger": true},
+      {"query": "帮我写一段数据处理代码", "should_trigger": false},
+      {"query": "生成一份 PDF 报告", "should_trigger": false},
+      {"query": "设计一个注册页面", "should_trigger": false},
+      {"query": "帮我跑一下 Newman 测试", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "writing-skills",
+    "queries": [
+      {"query": "帮我创建一个新的 skill", "should_trigger": true},
+      {"query": "修改一下 debugging 这个 skill 的触发条件", "should_trigger": true},
+      {"query": "帮我写一个 SKILL.md 文件", "should_trigger": true},
+      {"query": "这个 skill 需要更新，帮我编辑一下", "should_trigger": true},
+      {"query": "帮我写一段前端组件", "should_trigger": false},
+      {"query": "跑一下 E2E 测试", "should_trigger": false},
+      {"query": "帮我合并 PDF 文件", "should_trigger": false},
+      {"query": "调试这个接口报错", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "skill-creator",
+    "queries": [
+      {"query": "帮我从头开始创建一个新 skill", "should_trigger": true},
+      {"query": "我要做一个自动化部署的 skill", "should_trigger": true},
+      {"query": "帮我改进现有的 tdd skill 的性能", "should_trigger": true},
+      {"query": "怎么衡量一个 skill 的触发率", "should_trigger": true},
+      {"query": "帮我写一个 REST API", "should_trigger": false},
+      {"query": "把这些数据画成图表", "should_trigger": false},
+      {"query": "帮我做一个 Word 文档", "should_trigger": false},
+      {"query": "运行一下单元测试", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "agent-teams",
+    "queries": [
+      {"query": "用 agent 团队来做这个复杂任务", "should_trigger": true},
+      {"query": "帮我组织多个 agent 并行分析这个问题", "should_trigger": true},
+      {"query": "这个任务需要多维度分析，用 agent teams", "should_trigger": true},
+      {"query": "orchestrate a team of agents to research this topic", "should_trigger": true},
+      {"query": "帮我写一个简单的函数", "should_trigger": false},
+      {"query": "修改一下这个 CSS 样式", "should_trigger": false},
+      {"query": "帮我导出 Excel 报表", "should_trigger": false},
+      {"query": "这个页面加载太慢了帮我优化", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "ai-workflow",
+    "queries": [
+      {"query": "帮我走完整的开发流程，从 PRD 到 Card 到代码", "should_trigger": true},
+      {"query": "这个需求需要先建 card 再写代码", "should_trigger": true},
+      {"query": "帮我按照 card-first 的方式开发这个功能", "should_trigger": true},
+      {"query": "创建一个 CARD 然后开始写实现代码", "should_trigger": true},
+      {"query": "帮我把这些文件合成一个 PDF", "should_trigger": false},
+      {"query": "设计一个 p5.js 动画", "should_trigger": false},
+      {"query": "帮我做一个 PPT 演示文稿", "should_trigger": false},
+      {"query": "用 Playwright 测试这个表单", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "backend-extension",
+    "queries": [
+      {"query": "帮我写一个 Directus 11 的自定义 endpoint", "should_trigger": true},
+      {"query": "做一个 Directus extension 处理 OAuth 回调", "should_trigger": true},
+      {"query": "帮我创建一个 Directus 的 hook 扩展", "should_trigger": true},
+      {"query": "在 backend/extensions 里加一个自定义模块", "should_trigger": true},
+      {"query": "帮我做一个 React 登录页面", "should_trigger": false},
+      {"query": "写一段 Python 脚本处理数据", "should_trigger": false},
+      {"query": "帮我创建一个 Excel 报表", "should_trigger": false},
+      {"query": "review 一下这个 PR", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "business-prd-planner",
+    "queries": [
+      {"query": "我有一个产品想法，帮我写成 PRD", "should_trigger": true},
+      {"query": "帮我做一下这个功能的产品规划", "should_trigger": true},
+      {"query": "把这个商业点子变成 PRD、Story 和 Card", "should_trigger": true},
+      {"query": "plan feature: 用户可以导出订单历史", "should_trigger": true},
+      {"query": "帮我调试这个函数", "should_trigger": false},
+      {"query": "跑一下 API 测试", "should_trigger": false},
+      {"query": "帮我写一个排序算法", "should_trigger": false},
+      {"query": "转换这个文件为 PDF", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "d11-frontend",
+    "queries": [
+      {"query": "帮我写一个 Next.js 页面对接 Directus 11 数据", "should_trigger": true},
+      {"query": "用 authenticatedFetch 调用 D11 的接口", "should_trigger": true},
+      {"query": "帮我在前端集成 Directus 11 的 collection 数据", "should_trigger": true},
+      {"query": "写一个 D11 API module 加上 PRDAuthGateway", "should_trigger": true},
+      {"query": "帮我做一个纯静态的营销页面", "should_trigger": false},
+      {"query": "写一个 Python 爬虫", "should_trigger": false},
+      {"query": "把这个 Excel 文件转成 CSV", "should_trigger": false},
+      {"query": "帮我调试一个 CSS 布局问题", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "directus-schema",
+    "queries": [
+      {"query": "帮我看一下 Directus 里 order 这个 collection 的 schema", "should_trigger": true},
+      {"query": "怎么在 Directus 里建 M2M 关系", "should_trigger": true},
+      {"query": "帮我更新一下 seed data", "should_trigger": true},
+      {"query": "重新初始化 Directus 数据库", "should_trigger": true},
+      {"query": "帮我做一个前端登录表单", "should_trigger": false},
+      {"query": "把这个文档导出为 Word", "should_trigger": false},
+      {"query": "帮我做一个 PPT 演示", "should_trigger": false},
+      {"query": "写一个 cron job 定时任务", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "migration",
+    "queries": [
+      {"query": "帮我创建一个 Directus 的 migration", "should_trigger": true},
+      {"query": "run migration 把最新的 schema 变更应用上去", "should_trigger": true},
+      {"query": "帮我创建一个新的 Directus collection", "should_trigger": true},
+      {"query": "需要加个字段到 order collection 里，写个迁移", "should_trigger": true},
+      {"query": "帮我做一个 React 组件", "should_trigger": false},
+      {"query": "把 PDF 里的表格提取出来", "should_trigger": false},
+      {"query": "帮我写一个 E2E 测试", "should_trigger": false},
+      {"query": "做一个数据分析的 Excel 表", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "rbac",
+    "queries": [
+      {"query": "帮我在 Directus 里配置角色和权限", "should_trigger": true},
+      {"query": "创建一个 policy 限制用户只能看自己的数据", "should_trigger": true},
+      {"query": "设置 org-scoped 的数据隔离权限", "should_trigger": true},
+      {"query": "帮我给管理员角色添加新的 collection 权限", "should_trigger": true},
+      {"query": "帮我写一个 CSS 动画", "should_trigger": false},
+      {"query": "合并三个 PDF 文件", "should_trigger": false},
+      {"query": "帮我做一个图表组件", "should_trigger": false},
+      {"query": "写一个单元测试覆盖这个函数", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "pm-comments",
+    "queries": [
+      {"query": "synque 同步一下 card 上的评论", "should_trigger": true},
+      {"query": "帮我 pull 一下 PRD 上的 PM comments", "should_trigger": true},
+      {"query": "同步 docs/cards 里的文档和评论", "should_trigger": true},
+      {"query": "sync card CARD-PAY-011 的最新状态", "should_trigger": true},
+      {"query": "帮我写一个后端接口", "should_trigger": false},
+      {"query": "做一个 Excel 数据汇总", "should_trigger": false},
+      {"query": "帮我设计一个弹窗组件", "should_trigger": false},
+      {"query": "跑一下 Playwright 测试", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "progress",
+    "queries": [
+      {"query": "当前项目进度怎么样，有什么被阻塞的", "should_trigger": true},
+      {"query": "/progress", "should_trigger": true},
+      {"query": "帮我检查一下哪些 card 还没完成", "should_trigger": true},
+      {"query": "项目整体状态是什么，有什么 blocker 吗", "should_trigger": true},
+      {"query": "帮我写一个注册页面", "should_trigger": false},
+      {"query": "把这个文件转成 PDF", "should_trigger": false},
+      {"query": "帮我创建一个新的 Directus 扩展", "should_trigger": false},
+      {"query": "跑一下 API 测试套件", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "team-health",
+    "queries": [
+      {"query": "帮我检查一下 agent 团队的协作健康度", "should_trigger": true},
+      {"query": "做一个 system coherence audit", "should_trigger": true},
+      {"query": "team health check，看看各个 agent 是否正常工作", "should_trigger": true},
+      {"query": "检查一下技能框架和文档系统是否一致", "should_trigger": true},
+      {"query": "帮我做一个购物车功能", "should_trigger": false},
+      {"query": "写一个数据库查询", "should_trigger": false},
+      {"query": "帮我画一个流程图", "should_trigger": false},
+      {"query": "把这个 docx 转成 PDF", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "visualizer",
+    "queries": [
+      {"query": "帮我用 HTML 可视化项目进度", "should_trigger": true},
+      {"query": "做一个 PRD 依赖关系的交互式图", "should_trigger": true},
+      {"query": "生成一个测试覆盖率的可视化报告", "should_trigger": true},
+      {"query": "帮我把工作流的各个阶段做成可视化", "should_trigger": true},
+      {"query": "帮我写一个排序函数", "should_trigger": false},
+      {"query": "把这些数据导入 Excel", "should_trigger": false},
+      {"query": "帮我调试这个 CSS 问题", "should_trigger": false},
+      {"query": "创建一个 Directus 的 migration", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "landing-page",
+    "queries": [
+      {"query": "帮我做一个产品的 landing page", "should_trigger": true},
+      {"query": "创建一个新的域名对应的着陆页", "should_trigger": true},
+      {"query": "帮我搭建一个营销落地页，带独立导航", "should_trigger": true},
+      {"query": "做一个新的 landing page 并配置域名路由", "should_trigger": true},
+      {"query": "帮我做一个后台管理的 CRUD 页面", "should_trigger": false},
+      {"query": "写一段数据处理逻辑", "should_trigger": false},
+      {"query": "帮我做一个 PDF 报告", "should_trigger": false},
+      {"query": "调试这个 API 接口", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "landing-audit",
+    "queries": [
+      {"query": "审计一下现有的 landing page 是否符合规范", "should_trigger": true},
+      {"query": "检查落地页的 SEO 和 changelog 是否完整", "should_trigger": true},
+      {"query": "landing audit 看看五个页面有没有问题", "should_trigger": true},
+      {"query": "帮我检查 landing page 的技术 SEO 健康度", "should_trigger": true},
+      {"query": "帮我创建一个新的落地页", "should_trigger": false},
+      {"query": "写一个 React 组件", "should_trigger": false},
+      {"query": "帮我做一个 Excel 表格", "should_trigger": false},
+      {"query": "帮我跑一下 E2E 测试", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "canvas-design",
+    "queries": [
+      {"query": "帮我设计一张活动海报，输出 PNG", "should_trigger": true},
+      {"query": "做一个社交媒体配图", "should_trigger": true},
+      {"query": "帮我画一张产品宣传图", "should_trigger": true},
+      {"query": "设计一个 PDF 格式的证书模板", "should_trigger": true},
+      {"query": "帮我写一个 API 接口", "should_trigger": false},
+      {"query": "做一个 Excel 数据分析", "should_trigger": false},
+      {"query": "帮我调试这段代码", "should_trigger": false},
+      {"query": "创建一个 Directus collection", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "pptx",
+    "queries": [
+      {"query": "帮我做一个产品介绍的 PPT", "should_trigger": true},
+      {"query": "把这些数据做成一个 PowerPoint 演示文稿", "should_trigger": true},
+      {"query": "帮我读取这个 .pptx 文件里的内容", "should_trigger": true},
+      {"query": "做一个季度汇报的幻灯片", "should_trigger": true},
+      {"query": "帮我写一个 Word 文档", "should_trigger": false},
+      {"query": "做一个 Excel 报表", "should_trigger": false},
+      {"query": "帮我设计一个网页", "should_trigger": false},
+      {"query": "调试这个 Python 脚本", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "theme-factory",
+    "queries": [
+      {"query": "帮我给这个文档套一个专业主题", "should_trigger": true},
+      {"query": "用 midnight 主题来美化这个 PPT", "should_trigger": true},
+      {"query": "帮我给这个 HTML 页面换一套配色方案", "should_trigger": true},
+      {"query": "选一个预设主题应用到这份报告上", "should_trigger": true},
+      {"query": "帮我写一段业务逻辑代码", "should_trigger": false},
+      {"query": "跑一下单元测试", "should_trigger": false},
+      {"query": "帮我做一个数据库查询", "should_trigger": false},
+      {"query": "创建一个 Git worktree", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "doc-coauthoring",
+    "queries": [
+      {"query": "帮我一起写一份技术方案文档", "should_trigger": true},
+      {"query": "我想写一个 RFC 提案，帮我共同编写", "should_trigger": true},
+      {"query": "帮我起草一份架构设计文档", "should_trigger": true},
+      {"query": "一起 co-author 一份 technical spec", "should_trigger": true},
+      {"query": "帮我做一个前端页面", "should_trigger": false},
+      {"query": "把这些数据做成 Excel", "should_trigger": false},
+      {"query": "帮我 review 代码", "should_trigger": false},
+      {"query": "跑一下 Playwright 测试", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "algorithmic-art",
+    "queries": [
+      {"query": "帮我用 p5.js 做一个生成艺术作品", "should_trigger": true},
+      {"query": "做一个用算法生成的抽象图案", "should_trigger": true},
+      {"query": "帮我写一个可交互的 generative art 程序", "should_trigger": true},
+      {"query": "用随机种子生成一幅独特的几何艺术", "should_trigger": true},
+      {"query": "帮我做一个登录表单", "should_trigger": false},
+      {"query": "写一个数据处理脚本", "should_trigger": false},
+      {"query": "把这个文档转成 Word", "should_trigger": false},
+      {"query": "帮我调试这个 API", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "claude-api",
+    "queries": [
+      {"query": "帮我用 Anthropic SDK 调用 Claude API", "should_trigger": true},
+      {"query": "写一段代码用 claude-3 模型做文本生成", "should_trigger": true},
+      {"query": "帮我集成 Claude API 到我的应用里", "should_trigger": true},
+      {"query": "用 @anthropic-ai/sdk 写一个对话机器人", "should_trigger": true},
+      {"query": "帮我做一个 Excel 报表", "should_trigger": false},
+      {"query": "写一个 Directus 的 migration", "should_trigger": false},
+      {"query": "帮我设计一个网页 UI", "should_trigger": false},
+      {"query": "用 OpenAI SDK 调用 GPT-4", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "mcp-builder",
+    "queries": [
+      {"query": "帮我创建一个 MCP server", "should_trigger": true},
+      {"query": "做一个 Model Context Protocol 的服务端", "should_trigger": true},
+      {"query": "帮我写一个 MCP tool 让 LLM 能调用外部 API", "should_trigger": true},
+      {"query": "构建一个 MCP server 集成 GitHub", "should_trigger": true},
+      {"query": "帮我写一个普通的 REST API", "should_trigger": false},
+      {"query": "做一个 Excel 数据分析", "should_trigger": false},
+      {"query": "帮我调试这个前端组件", "should_trigger": false},
+      {"query": "创建一个 Directus 扩展", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "web-artifacts-builder",
+    "queries": [
+      {"query": "帮我做一个 claude.ai 上用的 HTML artifact", "should_trigger": true},
+      {"query": "做一个多组件的交互式 web artifact", "should_trigger": true},
+      {"query": "帮我构建一个 React + Tailwind 的 artifact", "should_trigger": true},
+      {"query": "写一个 claude artifact 带 echarts 图表", "should_trigger": true},
+      {"query": "帮我做一个后端 API", "should_trigger": false},
+      {"query": "把文件转成 PDF", "should_trigger": false},
+      {"query": "帮我写一个数据库 migration", "should_trigger": false},
+      {"query": "做一个 PPT 演示文稿", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "e2e-test",
+    "queries": [
+      {"query": "run e2e 跑一下完整的端到端测试", "should_trigger": true},
+      {"query": "执行 Playwright + Newman 的全套测试", "should_trigger": true},
+      {"query": "帮我跑 E2E 测试然后生成报告", "should_trigger": true},
+      {"query": "清理测试数据然后跑一遍集成测试", "should_trigger": true},
+      {"query": "帮我写一个新的 React 页面", "should_trigger": false},
+      {"query": "做一个 Excel 报表", "should_trigger": false},
+      {"query": "帮我设计一个 logo", "should_trigger": false},
+      {"query": "创建一个 Directus role", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "meta-evaluation",
+    "queries": [
+      {"query": "帮我评估 agent team 的效果并优化", "should_trigger": true},
+      {"query": "用递归方式改进 agent 协作模式", "should_trigger": true},
+      {"query": "做一个 meta-evaluation 分析团队 pattern", "should_trigger": true},
+      {"query": "评估现有的 agent team 策略有什么改进空间", "should_trigger": true},
+      {"query": "帮我写一段代码", "should_trigger": false},
+      {"query": "做一个 PPT 演示", "should_trigger": false},
+      {"query": "帮我调试这个 bug", "should_trigger": false},
+      {"query": "创建一个 landing page", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "business-report",
+    "queries": [
+      {"query": "帮我生成一份以 story 为中心的业务进度报告", "should_trigger": true},
+      {"query": "做一个 story-centric 的 flow status 报告", "should_trigger": true},
+      {"query": "帮我看看各个 story 的完成情况", "should_trigger": true},
+      {"query": "生成一份 business report 展示当前开发状态", "should_trigger": true},
+      {"query": "帮我做一个前端组件", "should_trigger": false},
+      {"query": "写一个 API 测试", "should_trigger": false},
+      {"query": "帮我做一个 Word 文档", "should_trigger": false},
+      {"query": "跑一下数据库迁移", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "context-review",
+    "queries": [
+      {"query": "帮我检查 AI Chat 的 context-assembler 质量", "should_trigger": true},
+      {"query": "跑几个测试问题看看 Gemini 的回答准不准", "should_trigger": true},
+      {"query": "诊断一下 context 注入有没有缺失", "should_trigger": true},
+      {"query": "做一轮 context review 看看哪些信息没被正确传递", "should_trigger": true},
+      {"query": "帮我写一个表单组件", "should_trigger": false},
+      {"query": "做一个 Excel 报表", "should_trigger": false},
+      {"query": "帮我 review 这个 PR", "should_trigger": false},
+      {"query": "创建一个 Directus collection", "should_trigger": false}
+    ]
+  },
+  {
+    "skill": "user-journey-mapper",
+    "queries": [
+      {"query": "从 PRD 文档里提取用户旅程地图", "should_trigger": true},
+      {"query": "帮我分析这些产品文档里的用户痛点", "should_trigger": true},
+      {"query": "做一个 journey map 看看用户流程有什么问题", "should_trigger": true},
+      {"query": "从 user stories 里整理出完整的用户旅程", "should_trigger": true},
+      {"query": "帮我写一段排序算法", "should_trigger": false},
+      {"query": "做一个 PPT", "should_trigger": false},
+      {"query": "帮我跑 E2E 测试", "should_trigger": false},
+      {"query": "调试这个 500 报错", "should_trigger": false}
+    ]
+  }
+]

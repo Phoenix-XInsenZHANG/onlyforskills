@@ -1,0 +1,92 @@
+digraph skill_dependencies {
+  rankdir=LR;
+  node [shape=box, style="rounded,filled", fillcolor="#E8F4FD", fontname="Helvetica"];
+  edge [color="#666666"];
+
+  "ai-workflow" [fillcolor="#FFE0B2"];
+  "brainstorming" [fillcolor="#FFE0B2"];
+  "writing-plans" [fillcolor="#FFE0B2"];
+  "executing-plans" [fillcolor="#FFE0B2"];
+  "finishing-branch" [fillcolor="#FFE0B2"];
+  "verification" [fillcolor="#FFE0B2"];
+  "tdd" [fillcolor="#FFE0B2"];
+  "debugging" [fillcolor="#FFE0B2"];
+  "code-review" [fillcolor="#C8E6C9"];
+  "requesting-code-review" [fillcolor="#C8E6C9"];
+  "receiving-code-review" [fillcolor="#C8E6C9"];
+  "agent-teams" [fillcolor="#E1BEE7"];
+  "dispatching-parallel-agents" [fillcolor="#E1BEE7"];
+  "subagent-driven-development" [fillcolor="#E1BEE7"];
+  "business-prd-planner" [fillcolor="#B3E5FC"];
+  "doc-coauthoring" [fillcolor="#B3E5FC"];
+  "pdf" [fillcolor="#B3E5FC"];
+  "docx" [fillcolor="#B3E5FC"];
+  "pptx" [fillcolor="#B3E5FC"];
+  "xlsx" [fillcolor="#B3E5FC"];
+  "api-testing" [fillcolor="#FFCDD2"];
+  "e2e-test" [fillcolor="#FFCDD2"];
+  "web-testing" [fillcolor="#FFCDD2"];
+  "migration" [fillcolor="#D7CCC8"];
+  "directus-schema" [fillcolor="#D7CCC8"];
+  "rbac" [fillcolor="#D7CCC8"];
+  "backend-extension" [fillcolor="#D7CCC8"];
+  "d11-frontend" [fillcolor="#D7CCC8"];
+  "skill-creator" [fillcolor="#F0F4C3"];
+  "writing-skills" [fillcolor="#F0F4C3"];
+  "router" [fillcolor="#F0F4C3"];
+  "onboard" [fillcolor="#F0F4C3"];
+  "progress" [fillcolor="#F0F4C3"];
+  "team-health" [fillcolor="#F0F4C3"];
+
+  "ai-workflow" -> "api-testing";
+  "ai-workflow" -> "directus-schema";
+  "ai-workflow" -> "pm-comments";
+  "api-testing" -> "ai-workflow";
+  "backend-extension" -> "api-testing";
+  "backend-extension" -> "directus-schema";
+  "backend-extension" -> "migration";
+  "brainstorming" -> "frontend-design";
+  "brainstorming" -> "writing-plans";
+  "business-prd-planner" -> "ai-workflow";
+  "business-prd-planner" -> "pm-comments";
+  "debugging" -> "tdd";
+  "debugging" -> "verification";
+  "directus-schema" -> "backend-extension";
+  "directus-schema" -> "migration";
+  "executing-plans" -> "finishing-branch";
+  "executing-plans" -> "git-worktrees";
+  "executing-plans" -> "subagent-driven-development";
+  "executing-plans" -> "verification";
+  "executing-plans" -> "writing-plans";
+  "landing-audit" -> "landing-page";
+  "meta-evaluation" -> "agent-teams";
+  "migration" -> "directus-schema";
+  "router" -> "web-testing";
+  "skill-creator" -> "general";
+  "skill-creator" -> "pdf";
+  "subagent-driven-development" -> "executing-plans";
+  "subagent-driven-development" -> "finishing-branch";
+  "subagent-driven-development" -> "git-worktrees";
+  "subagent-driven-development" -> "requesting-code-review";
+  "subagent-driven-development" -> "tdd";
+  "subagent-driven-development" -> "writing-plans";
+  "team-health" -> "ai-workflow";
+  "team-health" -> "progress";
+  "writing-plans" -> "brainstorming";
+  "writing-plans" -> "executing-plans";
+  "writing-plans" -> "subagent-driven-development";
+  "writing-skills" -> "debugging";
+  "writing-skills" -> "tdd";
+
+  // Legend
+  subgraph cluster_legend {
+    label="Categories"; style=dashed; fontname="Helvetica";
+    "legend_workflow" [label="workflow", fillcolor="#FFE0B2"];
+    "legend_review" [label="review", fillcolor="#C8E6C9"];
+    "legend_agents" [label="agents", fillcolor="#E1BEE7"];
+    "legend_docs" [label="docs", fillcolor="#B3E5FC"];
+    "legend_testing" [label="testing", fillcolor="#FFCDD2"];
+    "legend_infra" [label="infra", fillcolor="#D7CCC8"];
+    "legend_meta" [label="meta", fillcolor="#F0F4C3"];
+  }
+}

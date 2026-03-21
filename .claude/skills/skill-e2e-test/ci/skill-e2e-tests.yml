@@ -1,0 +1,162 @@
+name: Skill E2E Tests
+
+on:
+  pull_request:
+    paths:
+      - '.claude/skills/**'
+      - 'CLAUDE.md'
+  workflow_dispatch:
+    inputs:
+      level:
+        description: 'quick (P0+P3 only) | standard (P0+P3+P1+P4) | full (all)'
+        default: 'standard'
+
+concurrency:
+  group: skill-tests-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # ── P0: structure validation, zero cost, always runs ──────────────────────
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - name: P0 validate
+        run: |
+          python .claude/skills/skill-e2e-test/scripts/p0_validate.py \
+            --skills-dir .claude/skills \
+            --output .skill-test-results/p0.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: p0-results
+          path: .skill-test-results/p0.json
+
+  # ── P3: trigger rate, CI gate ──────────────────────────────────────────────
+  trigger:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install -g @anthropic-ai/claude-code
+      - name: P3 trigger rate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python .claude/skills/skill-e2e-test/scripts/p3_trigger.py \
+            --skills-dir .claude/skills \
+            --output .skill-test-results/p3.json \
+            --repeats 3 \
+            --threshold 0.75
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: p3-results
+          path: .skill-test-results/p3.json
+
+  # ── P1+P4: chain + loop, nightly/manual only ──────────────────────────────
+  chain-and-loop:
+    needs: validate
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'workflow_dispatch' &&
+      github.event.inputs.level != 'quick'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install -g @anthropic-ai/claude-code
+      - name: P1 chain propagation
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python .claude/skills/skill-e2e-test/scripts/p1_chain.py \
+            --output .skill-test-results/p1.json \
+            --max-turns 30 --repeats 2
+        continue-on-error: true  # P1 is monitoring, not gate
+      - name: P4 loop detection
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python .claude/skills/skill-e2e-test/scripts/p4_loop.py \
+            --output .skill-test-results/p4.json \
+            --max-turns 20
+        continue-on-error: true  # P4 is monitoring, not gate
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: chain-loop-results
+          path: .skill-test-results/
+
+  # ── Report + PR comment ───────────────────────────────────────────────────
+  report:
+    needs: [validate, trigger]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          path: .skill-test-results/
+          merge-multiple: true
+      - name: Generate report
+        id: report
+        run: |
+          python .claude/skills/skill-e2e-test/scripts/report.py \
+            --results-dir .skill-test-results \
+            --output .skill-test-results/report.json
+          PASSED=$(python -c "import json; r=json.load(open('.skill-test-results/report.json')); print('true' if r['ci_passed'] else 'false')")
+          echo "ci_passed=$PASSED" >> "$GITHUB_OUTPUT"
+      - name: Post PR comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('.skill-test-results/report.json'));
+            const p0 = report.phases.p0;
+            const p3 = report.phases.p3;
+            const emoji = report.ci_passed ? '✅' : '❌';
+            let body = `## ${emoji} Skill E2E Test Results\n\n`;
+            body += `| Phase | Score | Threshold | Status |\n|-------|-------|-----------|--------|\n`;
+            if (p0) body += `| P0 Structure | ${p0.score} | 100% | ${p0.overall_passed ? '✅' : '❌'} |\n`;
+            if (p3) body += `| P3 Trigger Rate | ${p3.score} | 75% | ${p3.overall_passed ? '✅' : '❌'} |\n`;
+            if (p3 && !p3.overall_passed) {
+              body += `\n**Failing skills:**\n`;
+              for (const s of p3.skills || []) {
+                if (s.trigger_rate < 0.75) {
+                  body += `- \`${s.skill}\`: ${(s.trigger_rate*100).toFixed(0)}%\n`;
+                }
+              }
+            }
+            body += `\n**Cost:** $${report.total_cost_usd.toFixed(3)}\n`;
+            github.rest.issues.createComment({
+              owner: context.repo.owner, repo: context.repo.repo,
+              issue_number: context.issue.number, body
+            });
+      - name: CI gate
+        if: steps.report.outputs.ci_passed == 'false'
+        run: |
+          echo "::error::P0 or P3 failed. Fix skill structure/trigger issues before merging."
+          exit 1

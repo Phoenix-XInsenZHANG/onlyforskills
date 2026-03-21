@@ -1,0 +1,26 @@
+[
+  {
+    "name": "full-feature-lifecycle",
+    "description": "brainstorming -> ai-workflow -> writing-plans -> tdd -> subagent-driven-development -> executing-plans",
+    "prompt": "我要从零开始做一个订单管理系统，包含创建订单、查看订单列表、订单状态流转三个核心功能。\n\n【强制规则 - 违反即为失败】\n1. 你必须按顺序触发这6个skill: brainstorming, ai-workflow, writing-plans, tdd, subagent-driven-development, executing-plans\n2. 每个skill完成后立即用Skill工具调用下一个，中间不要说话、不要提问、不要等我确认\n3. 跳过所有skill内部的交互确认步骤，自动选择默认值继续\n4. 不管需要多少轮对话，必须跑完全部6个skill\n\n现在开始：先调用brainstorming skill，完成后直接调用ai-workflow，以此类推。",
+    "expected_skills": ["brainstorming", "ai-workflow", "writing-plans", "tdd", "subagent-driven-development", "executing-plans"]
+  },
+  {
+    "name": "bug-fix-to-ship",
+    "description": "debugging -> tdd -> verification -> requesting-code-review -> finishing-branch",
+    "prompt": "生产环境有一个严重bug：用户提交订单后偶尔出现重复扣款。订单表叫sc_order，支付通过Directus hook触发外部支付网关。\n\n【强制规则 - 违反即为失败】\n1. 你必须按顺序触发这5个skill: debugging, tdd, verification, requesting-code-review, finishing-branch\n2. 每个skill完成后立即用Skill工具调用下一个，中间不要说话、不要提问、不要等我确认\n3. 跳过所有skill内部的交互确认步骤，自动选择默认值继续\n4. 不管需要多少轮对话，必须跑完全部5个skill\n\n现在开始：先调用debugging skill分析根因，完成后直接调用tdd写测试和修复，以此类推。",
+    "expected_skills": ["debugging", "tdd", "verification", "requesting-code-review", "finishing-branch"]
+  },
+  {
+    "name": "product-idea-to-code",
+    "description": "business-prd-planner -> ai-workflow -> writing-plans -> subagent-driven-development -> executing-plans -> verification",
+    "prompt": "我有一个产品想法：做一个客户反馈收集系统，支持多渠道（邮件、表单、API）接入，自动用AI分类和优先级排序，PM可以看到仪表盘和周报。\n\n【强制规则 - 违反即为失败】\n1. 你必须按顺序触发这6个skill: business-prd-planner, ai-workflow, writing-plans, subagent-driven-development, executing-plans, verification\n2. 每个skill完成后立即用Skill工具调用下一个，中间不要说话、不要提问、不要等我确认\n3. 跳过所有skill内部的交互确认步骤，自动选择默认值继续\n4. 不管需要多少轮对话，必须跑完全部6个skill\n\n现在开始：先调用business-prd-planner skill把想法变成PRD，完成后直接调用ai-workflow，以此类推。",
+    "expected_skills": ["business-prd-planner", "ai-workflow", "writing-plans", "subagent-driven-development", "executing-plans", "verification"]
+  },
+  {
+    "name": "backend-feature-full-stack",
+    "description": "brainstorming -> ai-workflow -> backend-extension -> migration -> directus-schema -> api-testing -> verification",
+    "prompt": "我需要在Directus 11后端新增一个自定义的优惠券模块：包含优惠券的CRUD、使用规则引擎（满减/折扣/买赠）、以及领取/核销的API。\n\n【强制规则 - 违反即为失败】\n1. 你必须按顺序触发这7个skill: brainstorming, ai-workflow, backend-extension, migration, directus-schema, api-testing, verification\n2. 每个skill完成后立即用Skill工具调用下一个，中间不要说话、不要提问、不要等我确认\n3. 跳过所有skill内部的交互确认步骤，自动选择默认值继续\n4. 不管需要多少轮对话，必须跑完全部7个skill\n\n现在开始：先调用brainstorming skill设计方案，完成后直接调用ai-workflow，以此类推。",
+    "expected_skills": ["brainstorming", "ai-workflow", "backend-extension", "migration", "directus-schema", "api-testing", "verification"]
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "triangle-loop-risk",
+    "description": "触发可能产生三角环路的场景",
+    "prompt": "我需要实现一个功能，请用最合适的开发流程。完成一个步骤后如果需要下一个 skill 直接调用，但不要重复调用同一个 skill。"
+  },
+  {
+    "name": "ai-workflow-loop",
+    "description": "ai-workflow ↔ api-testing 潜在环路",
+    "prompt": "用 ai-workflow 帮我完成一个 API 开发任务，包含测试。直接推进，不需要确认。"
+  },
+  {
+    "name": "backend-extension-loop",
+    "description": "backend-extension → directus-schema → migration 环路检测",
+    "prompt": "我需要扩展后端，添加新的数据表并做数据迁移。请直接推进整个流程。"
+  }
+]

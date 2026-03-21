@@ -59,7 +59,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '⛔ MANDATORY SKILL ACTIVATION — NO EXCEPTIONS:\nYou MUST activate a skill via Skill() tool before writing ANY response.\n1. SCAN available skills for matches\n2. If a specialized skill matches → activate it\n3. If NO specialized skill matches → activate general skill\n4. NEVER respond without loading a skill first\nVIOLATION: Writing code, prose, or answers without an active skill is FORBIDDEN.'"
+            "command": "echo '⛔ MANDATORY ENTRY POINT — NO EXCEPTIONS:\nYou MUST call Skill(general) FIRST before ANY other action.\n\nFLOW:\n1. Skill(general) → 两阶段确认 → 选择工具链或单独 skill\n2. NEVER directly call specialized skills (brainstorming, debugging, etc.)\n3. NEVER respond without going through general first\n\nVIOLATION: Calling any skill other than general as the first skill is FORBIDDEN.'"
           }
         ]
       }
