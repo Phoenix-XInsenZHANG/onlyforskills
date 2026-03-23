@@ -369,3 +369,15 @@ Otherwise → not TDD
 ```
 
 No exceptions without your human partner's permission.
+
+## Completeness Principle for Tests
+
+AI makes test writing near-zero marginal cost. Apply these rules:
+
+- **Never defer test coverage** — adding missing tests costs ~15 min with AI vs 1 day human time
+- **100% coverage for the module you're touching is a lake, not an ocean** — always boil it
+- If writing 3 happy-path tests, write the 2 negative-path tests too. The delta is minutes.
+- **Anti-pattern:** "I'll add edge case tests in a follow-up" — this never happens. Do it now.
+
+Show both effort estimates when suggesting test scope:
+- "Adding these 5 edge-case tests: ~2 days human / ~10 min with AI"

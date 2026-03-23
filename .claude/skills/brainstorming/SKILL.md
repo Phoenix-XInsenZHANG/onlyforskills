@@ -242,6 +242,28 @@ Wait for the user's response. If they request changes, make them. Only proceed o
 - Invoke the writing-plans skill to create a detailed implementation plan
 - Do NOT invoke any other skill. writing-plans is the next step.
 
+## Completeness Principle — Boil the Lake
+
+AI-assisted development makes the marginal cost of completeness near-zero. When evaluating options:
+
+- **Always recommend the complete implementation** over shortcuts when the delta is small. 80 lines vs 150 lines is meaningless with AI assistance.
+- **Lake vs. ocean:** A "lake" is boilable — full feature implementation, 100% coverage for a module, all edge cases handled. An "ocean" is not — full system rewrites, multi-quarter migrations. Recommend boiling lakes; flag oceans as out of scope.
+- **Show both effort scales** when estimating work:
+
+| Task type | Human team | With AI | Compression |
+|-----------|-----------|---------|-------------|
+| Boilerplate / scaffolding | 2 days | 15 min | ~100x |
+| Test writing | 1 day | 15 min | ~50x |
+| Feature implementation | 1 week | 30 min | ~30x |
+| Bug fix + regression test | 4 hours | 15 min | ~20x |
+| Architecture / design | 2 days | 4 hours | ~5x |
+| Research / exploration | 1 day | 3 hours | ~3x |
+
+**Anti-patterns:**
+- BAD: "Choose B — it covers 90% of the value." (If A costs 70 more lines, choose A.)
+- BAD: "Defer test coverage to a follow-up PR." (Tests are the cheapest lake to boil.)
+- BAD: Quoting only human effort: "This takes 2 weeks." (Say: "2 weeks human / ~1 hour with AI.")
+
 ## Key Principles
 
 - **One question at a time** - Don't overwhelm with multiple questions
