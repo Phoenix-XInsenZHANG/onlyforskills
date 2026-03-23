@@ -300,6 +300,7 @@ Skills are SOPs — execute step-by-step, don't improvise. Test before changing 
 | "create skill" | `skill-creator` | Create new skills |
 | "team health" | `team-health` | System coherence audit |
 | "visualize" | `visualizer` | HTML visualizations |
+| "browse", "QA", "点击测试", "ship", "production", "careful", "codex", "retro" | `gstack/*` | gstack 独有工具链 |
 
 **Skill locations:** `.claude/skills/{name}/SKILL.md`
 
@@ -330,3 +331,45 @@ Skills are SOPs — execute step-by-step, don't improvise. Test before changing 
 | Directus relations | `.claude/skills/directus-schema/references/directus-relations.md` |
 | Directus SDK | `.claude/skills/directus-schema/references/directus-sdk-best-practices.md` |
 | RBAC patterns | `.claude/skills/ai-workflow/references/directus-rbac-patterns.md` |
+
+---
+
+## gstack 工具链
+
+gstack 补充了 .claude 体系中缺失的执行层工具。**始终使用 `gstack/browse` 替代任何 `mcp__claude-in-chrome__*` 工具进行 web 浏览。**
+
+### 可用 Skills
+
+| Skill | 触发关键词 | 用途 |
+|-------|-----------|------|
+| `gstack/browse` | "browse", "open url", "navigate" | headless 浏览器，~100ms/命令 |
+| `gstack/qa` | "qa", "test the app", "click through" | 真实浏览器 QA 测试 |
+| `gstack/qa-only` | "qa only", "just test" | 纯 QA，不含 review |
+| `gstack/careful` | "production", "生产", "careful" | 生产操作安全模式 |
+| `gstack/freeze` | "freeze", "lock scope" | 锁定编辑范围到指定目录 |
+| `gstack/guard` | "guard", "maximum safety" | 最高安全模式 + 编辑警告 |
+| `gstack/unfreeze` | "unfreeze", "unlock" | 解除 freeze/guard |
+| `gstack/codex` | "adversarial review", "second opinion" | 对抗性代码审查 |
+| `gstack/retro` | "retro", "stats", "周报" | 开发统计周报 |
+| `gstack/ship` | "ship", "create pr", "deploy" | 一键 PR 创建 |
+| `gstack/document-release` | "document release", "post-ship" | 发布后文档更新 |
+| `gstack/office-hours` | "office hours", "YC 风格", "is this worth building" | YC 强迫性产品追问 |
+
+### 重叠 Skill 路由规则
+
+当意图模糊时，按以下规则路由：
+
+| 意图 | 优先路由 | 理由 |
+|------|---------|------|
+| 需求探索 / brainstorm | `.claude/brainstorming` | 有 PRD/Story/Card 3 层文档输出 |
+| YC 风格逼问 | `gstack/office-hours` | 专为 startup/product idea 设计 |
+| code review | `.claude/code-review` | 已注入 SQL/LLM 检查清单 |
+| 真实浏览器测试 | `gstack/qa` | 唯一具备浏览器能力的 skill |
+| 生产系统操作 | `gstack/careful` | 安全锁定模式 |
+
+### setup 故障排查
+
+如果 gstack skills 无法运行：
+```bash
+cd .claude/skills/gstack && ./setup
+```
