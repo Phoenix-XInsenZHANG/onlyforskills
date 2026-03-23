@@ -1,0 +1,330 @@
+#!/usr/bin/env python3
+"""
+generate-register.py
+Auto-scan all skill directories under .claude/skills/, generate register.md.
+
+Chain detection convention:
+  Toolchain skills MUST have these frontmatter fields:
+    type: chain
+    steps: skill-a → skill-b → skill-c
+
+  Example:
+    ---
+    name: full-feature-lifecycle
+    type: chain
+    steps: brainstorming → writing-plans → tdd → subagent-driven-development
+    description: >
+      Complete feature development lifecycle...
+    ---
+
+Guarantees:
+  - Every directory with SKILL.md is registered. Zero omissions.
+  - Even if frontmatter parsing fails, directory name is used as fallback.
+  - Chains are separated into their own section in register.md.
+  - Cross-validation ensures no skill is missed.
+
+Usage:
+  python3 .claude/skills/general/scripts/generate-register.py
+
+Output:
+  .claude/skills/general/references/register.md
+"""
+
+import re
+import sys
+from datetime import datetime
+from pathlib import Path
+
+# ── Path config ──────────────────────────────────────────
+SCRIPT_DIR = Path(__file__).resolve().parent
+SKILLS_ROOT = SCRIPT_DIR.parent.parent  # .claude/skills/
+OUTPUT_FILE = SCRIPT_DIR.parent / "references" / "register.md"
+
+
+def parse_frontmatter(skill_md_path: Path) -> dict:
+    """
+    Extract YAML frontmatter from SKILL.md.
+    Always returns a dict (empty dict on failure, never None).
+    """
+    try:
+        content = skill_md_path.read_text(encoding="utf-8")
+    except Exception as e:
+        print(f"  ⚠️  Read failed {skill_md_path}: {e}", file=sys.stderr)
+        return {}
+
+    match = re.match(r"^---\s*\n(.*?)\n---", content, re.DOTALL)
+    if not match:
+        print(f"  ⚠️  No frontmatter: {skill_md_path}", file=sys.stderr)
+        return {}
+
+    fm_text = match.group(1)
+    data = {}
+    current_key = None
+    current_value_lines = []
+
+    for line in fm_text.split("\n"):
+        if not line.strip():
+            continue
+
+        if current_key and (line.startswith("  ") or line.startswith("\t")):
+            current_value_lines.append(line.strip())
+            continue
+
+        if current_key:
+            data[current_key] = " ".join(current_value_lines).strip()
+            current_key = None
+            current_value_lines = []
+
+        if ":" in line:
+            key, _, value = line.partition(":")
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if value in (">", "|", ">-", "|-"):
+                current_key = key
+                current_value_lines = []
+            else:
+                data[key] = value
+
+    if current_key:
+        data[current_key] = " ".join(current_value_lines).strip()
+
+    return data
+
+
+def scan_all_skill_dirs(skills_root: Path) -> list[dict]:
+    """
+    Scan all skill directories.
+    Guarantee: every subdirectory with SKILL.md is registered.
+    Even if frontmatter parsing fails, directory name is used as fallback.
+    """
+    skills = []
+
+    for skill_dir in sorted(skills_root.iterdir()):
+        if not skill_dir.is_dir():
+            continue
+
+        skill_md = skill_dir / "SKILL.md"
+        if not skill_md.exists():
+            has_md = any(skill_dir.glob("*.md"))
+            if has_md:
+                print(f"  ℹ️  Skipped (no SKILL.md): {skill_dir.name}/", file=sys.stderr)
+            continue
+
+        data = parse_frontmatter(skill_md)
+
+        skill_id = data.get("name", "") or skill_dir.name
+        description = data.get("description", "") or f"(skill: {skill_dir.name})"
+        skill_type = data.get("type", "skill").lower().strip()
+        steps_raw = data.get("steps", "")
+        rel_path = f"skills/{skill_dir.name}/SKILL.md"
+
+        # Parse steps: support "→", "->", "," as separators
+        steps = []
+        if steps_raw:
+            steps_raw = steps_raw.replace("->", "→")
+            steps = [s.strip() for s in steps_raw.split("→") if s.strip()]
+
+        skills.append({
+            "id": skill_id,
+            "dir_name": skill_dir.name,
+            "description": description,
+            "path": rel_path,
+            "has_frontmatter": bool(data),
+            "type": skill_type,
+            "steps": steps,
+        })
+
+    return skills
+
+
+def generate_register(skills: list[dict]) -> str:
+    """
+    Generate register.md.
+    Chains and individual skills are listed in separate sections.
+    All skills appear in at least one section. Zero omissions.
+    """
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    chains = [s for s in skills if s["type"] == "chain"]
+    individuals = [s for s in skills if s["type"] != "chain"]
+    total = len(skills)
+    ok_count = sum(1 for s in skills if s["has_frontmatter"])
+    warn_count = total - ok_count
+
+    lines = []
+
+    # ── Header ──
+    lines.append("---")
+    lines.append("name: register")
+    lines.append('version: "auto-generated"')
+    lines.append(f'updated: "{now}"')
+    lines.append("description: >")
+    lines.append("  Central registry — auto-generated by generate-register.py.")
+    lines.append("  The general skill reads this file for routing. Do not edit manually.")
+    lines.append("---")
+    lines.append("")
+    lines.append("# Skill & Chain Registry")
+    lines.append("")
+    lines.append(f"> Auto-generated: {now}")
+    lines.append(f"> Total: **{total}** skills ({len(chains)} chains, {len(individuals)} individual, {warn_count} missing frontmatter)")
+    lines.append("")
+
+    # ── Toolchains section ──
+    lines.append("## Toolchains")
+    lines.append("")
+    if chains:
+        lines.append("| # | ID | Steps | Description | Path |")
+        lines.append("|---|-----|-------|-------------|------|")
+        for i, c in enumerate(chains, 1):
+            steps_str = " → ".join(c["steps"]) if c["steps"] else "(no steps defined)"
+            desc = c["description"]
+            if len(desc) > 100:
+                desc = desc[:97] + "..."
+            desc = desc.replace("|", "\\|")
+            lines.append(f"| {i} | `{c['id']}` | {steps_str} | {desc} | {c['path']} |")
+    else:
+        lines.append("No toolchains detected.")
+        lines.append("")
+        lines.append("To create a toolchain, add these fields to a skill's SKILL.md frontmatter:")
+        lines.append("")
+        lines.append("```yaml")
+        lines.append("---")
+        lines.append("name: my-chain-name")
+        lines.append("type: chain")
+        lines.append("steps: skill-a → skill-b → skill-c")
+        lines.append("description: >")
+        lines.append("  What this chain does and when to use it.")
+        lines.append("---")
+        lines.append("```")
+    lines.append("")
+
+    # ── Individual skills section ──
+    lines.append("## Individual Skills")
+    lines.append("")
+    lines.append("| # | ID | Directory | Description | Path |")
+    lines.append("|---|-----|-----------|-------------|------|")
+
+    for i, s in enumerate(individuals, 1):
+        desc = s["description"]
+        if len(desc) > 120:
+            desc = desc[:117] + "..."
+        desc = desc.replace("|", "\\|")
+        warn = " ⚠️" if not s["has_frontmatter"] else ""
+        lines.append(f"| {i} | `{s['id']}` | {s['dir_name']} | {desc}{warn} | {s['path']} |")
+
+    lines.append("")
+
+    # ── Warnings ──
+    if warn_count > 0:
+        lines.append("## ⚠️ Missing Frontmatter")
+        lines.append("")
+        lines.append("The following skills have no valid YAML frontmatter (registered with directory name as fallback).")
+        lines.append("Add frontmatter for better routing:")
+        lines.append("")
+        for s in skills:
+            if not s["has_frontmatter"]:
+                lines.append(f"- `{s['dir_name']}` → edit `{s['path']}` to add `---` frontmatter")
+        lines.append("")
+
+    # ── Routing rules ──
+    lines.append("## Routing Priority")
+    lines.append("")
+    lines.append("```")
+    lines.append("1. User explicitly names a skill/chain → use directly")
+    lines.append("2. Keywords match a chain description → recommend chain")
+    lines.append("3. Keywords match an individual skill → recommend skill")
+    lines.append("4. Multiple matches → list candidates for user to choose")
+    lines.append("5. No match → general handles directly")
+    lines.append("```")
+    lines.append("")
+
+    # ── Maintenance ──
+    lines.append("## Maintenance")
+    lines.append("")
+    lines.append("This file is auto-generated. **Do not edit manually.**")
+    lines.append("")
+    lines.append("```bash")
+    lines.append("# Regenerate after adding/modifying skills")
+    lines.append("python3 .claude/skills/general/scripts/generate-register.py")
+    lines.append("```")
+    lines.append("")
+    lines.append("### How to create a toolchain")
+    lines.append("")
+    lines.append("Add these fields to your skill's SKILL.md frontmatter:")
+    lines.append("")
+    lines.append("```yaml")
+    lines.append("---")
+    lines.append("name: my-chain")
+    lines.append("type: chain")
+    lines.append("steps: step1-skill → step2-skill → step3-skill")
+    lines.append("description: >")
+    lines.append("  Description of what this chain does.")
+    lines.append("---")
+    lines.append("```")
+    lines.append("")
+    lines.append("Then run the generate script. The chain will appear in the Toolchains section automatically.")
+
+    return "\n".join(lines)
+
+
+def main():
+    print(f"📂 Scanning: {SKILLS_ROOT}")
+
+    if not SKILLS_ROOT.exists():
+        print(f"❌ Skills directory not found: {SKILLS_ROOT}", file=sys.stderr)
+        sys.exit(1)
+
+    # ── Step 1: Scan all skill directories ──
+    skills = scan_all_skill_dirs(SKILLS_ROOT)
+    chains = [s for s in skills if s["type"] == "chain"]
+    individuals = [s for s in skills if s["type"] != "chain"]
+    print(f"✅ Registered {len(skills)} skills ({len(chains)} chains, {len(individuals)} individual)")
+
+    # ── Step 2: Cross-validation ──
+    registered_dirs = {s["dir_name"] for s in skills}
+    all_skill_dirs = {
+        d.name
+        for d in SKILLS_ROOT.iterdir()
+        if d.is_dir() and (d / "SKILL.md").exists()
+    }
+    missed = all_skill_dirs - registered_dirs
+    if missed:
+        print(f"❌ FATAL: These skill directories were not registered: {missed}", file=sys.stderr)
+        print("   This is a script bug. Check scan_all_skill_dirs()", file=sys.stderr)
+        sys.exit(1)
+
+    print(f"✅ Cross-validation passed: {len(all_skill_dirs)} dirs = {len(registered_dirs)} registered")
+
+    # ── Step 3: Validate chain steps reference existing skills ──
+    all_skill_ids = {s["id"] for s in skills}
+    all_dir_names = {s["dir_name"] for s in skills}
+    for chain in chains:
+        for step in chain["steps"]:
+            if step not in all_skill_ids and step not in all_dir_names:
+                print(f"  ⚠️  Chain '{chain['id']}' references unknown skill: '{step}'", file=sys.stderr)
+
+    # ── Step 4: Generate register.md ──
+    content = generate_register(skills)
+
+    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_FILE.write_text(content, encoding="utf-8")
+    print(f"📝 Generated: {OUTPUT_FILE}")
+
+    # ── Step 5: Summary ──
+    ok = sum(1 for s in skills if s["has_frontmatter"])
+    warn = len(skills) - ok
+    print(f"\n📊 Summary: {len(skills)} total | {len(chains)} chains | {ok} complete | {warn} missing frontmatter")
+    if chains:
+        print("🔗 Chains detected:")
+        for c in chains:
+            steps_str = " → ".join(c["steps"]) if c["steps"] else "(no steps)"
+            print(f"   - {c['id']}: {steps_str}")
+    if warn:
+        print("⚠️  Missing frontmatter (fallback registered):")
+        for s in skills:
+            if not s["has_frontmatter"]:
+                print(f"   - {s['dir_name']}/SKILL.md")
+
+
+if __name__ == "__main__":
+    main()

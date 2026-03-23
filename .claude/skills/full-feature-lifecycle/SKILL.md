@@ -7,6 +7,7 @@ description: |
   当用户说"从零开始"、"完整功能"、"新功能开发"、"端到端实现"时触发。
 
   节点序列: brainstorming → writing-plans → subagent-driven-development → qa[gstack]
+steps: brainstorming → writing-plans → subagent-driven-development → qa
 ---
 
 # Full Feature Lifecycle
