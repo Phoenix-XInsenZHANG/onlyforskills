@@ -28,7 +28,7 @@ description: |
 └────────┬────────┘
          ▼
 ┌─────────────────┐
-│ 2. WRITING-PLANS│  创建详细实施计划（含 TDD 步骤）
+│ 2. WRITING-PLANS│  创建详细实施计划（含精确步骤和文件路径）
 └────────┬────────┘
          ▼
 ┌─────────────────┐
@@ -61,7 +61,7 @@ Skill("brainstorming")
 Skill("writing-plans")
 ```
 
-**目的**: 基于 Card 创建详细实施计划，含逐步 TDD 步骤和精确文件路径
+**目的**: 基于 Card 创建详细实施计划，含精确文件路径、逐步步骤和预期输出
 
 **产出**:
 - `docs/superpowers/plans/YYYY-MM-DD-feature.md`
