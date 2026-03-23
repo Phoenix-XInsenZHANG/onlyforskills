@@ -294,3 +294,29 @@ From debugging sessions:
 - Random fixes approach: 2-3 hours of thrashing
 - First-time fix rate: 95% vs 40%
 - New bugs introduced: Near zero vs common
+
+## Completion Status Protocol
+
+When finishing this skill's workflow, always report using one of these statuses:
+
+- **DONE** — All steps completed. Evidence provided for each claim. No unverified assertions.
+- **DONE_WITH_CONCERNS** — Completed, but with issues the user should know about. List each concern explicitly.
+- **BLOCKED** — Cannot proceed. State what is blocking and what was tried.
+- **NEEDS_CONTEXT** — Missing information required to continue. State exactly what you need.
+
+### Escalation Rules
+
+Bad work is worse than no work. Escalate when:
+- Attempted the same task 3 times without success → STOP
+- Uncertain about a security-sensitive change → STOP
+- Scope of work exceeds what you can verify → STOP
+
+Escalation format:
+```
+STATUS: BLOCKED | NEEDS_CONTEXT
+REASON: [1-2 sentences]
+ATTEMPTED: [what you tried]
+RECOMMENDATION: [what the user should do next]
+```
+
+**Verification rule:** Before claiming something is "handled" or "tested" — cite the specific file and line. Never say "likely handled" or "probably tested."

@@ -384,6 +384,35 @@ yarn build
 
 ---
 
+## Security & Trust Boundary Checklist
+
+Run this checklist during every code review. These are **CRITICAL** — flag any violation.
+
+### SQL & Data Safety
+- [ ] No string interpolation in SQL queries (use parameterized queries: `sanitize_sql_array`, prepared statements, `?` placeholders)
+- [ ] No TOCTOU races: check-then-set patterns should use atomic `WHERE` + `UPDATE` instead
+- [ ] No bypassing model validations for direct DB writes (`update_column`, `QuerySet.update()`, raw queries)
+- [ ] No N+1 queries: associations used in loops should be eager-loaded (`.includes()`, `joinedload()`, `include:`)
+
+### LLM Output Trust Boundary
+- [ ] LLM-generated values (emails, URLs, names) validated before DB writes or external calls — add lightweight guards (`EMAIL_REGEXP`, `URI.parse`, `.strip`)
+- [ ] Structured tool output (arrays, hashes) type/shape-checked before database writes
+- [ ] User-controlled data NOT passed to unsafe HTML rendering (`html_safe`, `dangerouslySetInnerHTML`, `v-html`, `|safe`)
+- [ ] LLM prompt text does not list tools/capabilities that aren't actually wired up
+
+### Race Conditions
+- [ ] find-or-create has unique DB index to prevent concurrent duplicate creation
+- [ ] Status transitions use atomic `WHERE old_status = ? UPDATE SET new_status` pattern
+- [ ] Read-check-write patterns protected by uniqueness constraint or duplicate-key retry
+
+### Enum & Value Completeness
+When a new enum value, status, or type constant appears in the diff:
+- [ ] Traced through all consumers (switch/case, if-elsif, filter arrays) — READ the files, don't just grep
+- [ ] All `%w[]` allowlists and `case` branches updated to handle the new value
+- [ ] Frontend and backend both handle the new value consistently
+
+---
+
 ### ❌ CRITICAL ISSUES
 **1. [Issue Title]**
 
@@ -806,3 +835,29 @@ git diff --stat $BASE..HEAD
 - **v1.2** (2026-02-15): Added Phase 7 - Auto-post review feedback to Directus comments
 - **v1.1** (2026-02-15): Added PR auto-fetch capability using `gh` CLI
 - **v1.0** (2026-02-15): Initial release with 7-phase review workflow
+
+## Completion Status Protocol
+
+When finishing this skill's workflow, always report using one of these statuses:
+
+- **DONE** — All steps completed. Evidence provided for each claim. No unverified assertions.
+- **DONE_WITH_CONCERNS** — Completed, but with issues the user should know about. List each concern explicitly.
+- **BLOCKED** — Cannot proceed. State what is blocking and what was tried.
+- **NEEDS_CONTEXT** — Missing information required to continue. State exactly what you need.
+
+### Escalation Rules
+
+Bad work is worse than no work. Escalate when:
+- Attempted the same task 3 times without success → STOP
+- Uncertain about a security-sensitive change → STOP
+- Scope of work exceeds what you can verify → STOP
+
+Escalation format:
+```
+STATUS: BLOCKED | NEEDS_CONTEXT
+REASON: [1-2 sentences]
+ATTEMPTED: [what you tried]
+RECOMMENDATION: [what the user should do next]
+```
+
+**Verification rule:** Before claiming something is "handled" or "tested" — cite the specific file and line. Never say "likely handled" or "probably tested."
