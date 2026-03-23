@@ -7,6 +7,7 @@ description: |
   当用户说"代码审查循环"、"review loop"、"审查有反馈需要处理"时触发。
 
   节点序列: requesting-code-review → receiving-code-review → tdd → verification → requesting-code-review (循环，最多 3 轮)
+steps: requesting-code-review → receiving-code-review → tdd → verification
 ---
 
 # Code Review Loop

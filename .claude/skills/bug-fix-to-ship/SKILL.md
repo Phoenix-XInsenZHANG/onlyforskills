@@ -7,6 +7,7 @@ description: |
   当用户说"修复bug"、"生产环境问题"、"线上故障"、"紧急修复"时触发。
 
   节点序列: debugging → tdd → verification → codex[gstack] → requesting-code-review → finishing-branch
+steps: debugging → tdd → verification → codex → requesting-code-review → finishing-branch
 ---
 
 # Bug Fix to Ship

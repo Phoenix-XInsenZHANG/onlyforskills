@@ -304,6 +304,18 @@ Skills are SOPs — execute step-by-step, don't improvise. Test before changing 
 
 **Skill locations:** `.claude/skills/{name}/SKILL.md`
 
+### Chains（工作流链路）
+
+端到端链路，每个节点是一个 skill，顺序执行，不可跳过。gstack 节点（[gstack]）为必经步骤。
+
+| ID | Chain | 节点序列 | 触发条件 |
+|----|-------|---------|---------|
+| C01 | `full-feature-lifecycle` | brainstorming → writing-plans → subagent-driven-development → **qa[gstack]** | "从零开始", "完整功能", "端到端实现" |
+| C02 | `bug-fix-to-ship` | debugging → tdd → verification → **codex[gstack]** → requesting-code-review → finishing-branch | "修复bug", "线上故障", "hotfix" |
+| C03 | `refactor-to-ship` | **codex[gstack]** → tdd → verification → requesting-code-review → finishing-branch | "重构", "技术债", "refactor" |
+| C04 | `deploy-pipeline` | verification → requesting-code-review → **ship[gstack]** → **qa[gstack]** → finishing-branch | "部署", "上线", "发版" |
+| C05 | `code-review-loop` | requesting-code-review → receiving-code-review → tdd → verification (循环 ≤3 轮) | "review loop", "审查循环" |
+
 ---
 
 ## Path-Scoped Rules (`.claude/rules/`)

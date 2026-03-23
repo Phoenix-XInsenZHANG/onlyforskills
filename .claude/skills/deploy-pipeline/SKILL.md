@@ -7,6 +7,7 @@ description: |
   当用户说"部署"、"上线"、"deploy"、"发版"、"发布"时触发。
 
   节点序列: verification → requesting-code-review → ship[gstack] → qa[gstack] → finishing-branch
+steps: verification → requesting-code-review → ship → qa → finishing-branch
 ---
 
 # Deploy Pipeline

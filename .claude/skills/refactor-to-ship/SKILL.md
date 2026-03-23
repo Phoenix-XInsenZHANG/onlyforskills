@@ -7,6 +7,7 @@ description: |
   当用户说"重构"、"技术债清理"、"refactor"、"代码优化"时触发。
 
   节点序列: codex[gstack] → tdd → verification → requesting-code-review → finishing-branch
+steps: codex → tdd → verification → requesting-code-review → finishing-branch
 ---
 
 # Refactor to Ship
