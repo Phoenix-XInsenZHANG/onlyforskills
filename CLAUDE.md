@@ -315,6 +315,13 @@ Skills are SOPs — execute step-by-step, don't improvise. Test before changing 
 | C03 | `refactor-to-ship` | **codex[gstack]** → tdd → verification → requesting-code-review → finishing-branch | "重构", "技术债", "refactor" |
 | C04 | `deploy-pipeline` | verification → requesting-code-review → **ship[gstack]** → **qa[gstack]** → finishing-branch | "部署", "上线", "发版" |
 | C05 | `code-review-loop` | requesting-code-review → receiving-code-review → tdd → verification (循环 ≤3 轮) | "review loop", "审查循环" |
+| **产品生命周期 Chains（6 阶段闭环）** ||||
+| C06 | `product-discovery` | office-hours → brainstorming → **ai-workflow[验证]** → brainstorm-ideas-existing → identify-assumptions-existing → brainstorm-experiments-existing | "产品发现", "discovery", "探索需求" |
+| C07 | `strategic-alignment` | value-proposition → prioritize-features → competitor-analysis → **ai-workflow[验证]** | "战略对齐", "优先级排序", "竞品分析" |
+| C08 | `feature-spec-design` | plan-ceo-review → plan-design-review → design-consultation → writing-plans → create-prd → **ai-workflow[验证]** → metrics-dashboard | "功能规格", "写PRD", "设计评审" |
+| C09 | `engineering-review` | plan-eng-review → writing-plans → user-stories → **ai-workflow[验证]** | "工程评审", "技术评审", "eng review" |
+| C10 | `dev-execution` | **ai-workflow[验证]** → executing-plans → review → **qa[gstack]** | "开始开发", "执行计划", "start coding" |
+| C11 | `release-retro` | **ship[gstack]** → **ai-workflow[验证]** → gtm-strategy → north-star-metric → retro | "发布上线", "release", "上线复盘" |
 
 ---
 
