@@ -132,12 +132,44 @@ Skill("brainstorm-experiments-existing")
 
 **注意**: 如果是全新产品，改用 `brainstorm-experiments-new`（侧重 pretotype 和 MVP 实验）。
 
+## 测试验证层
+
+每个阶段有专属验证节点，确保产出质量：
+
+| 验证点 | 工具 | 验证内容 |
+|--------|------|---------|
+| 假设验证实验 | `brainstorm-experiments` | 每个高风险假设有对应的低成本验证方案 |
+| 方向判断 | `office-hours` 六问 | 需求真实性、现状替代方案、极致具体性 |
+| 文档合规 | `ai-workflow` | PRD/Story/Card 三层文档格式和关联完整 |
+
+## Gate Checklist（出口质量关卡）
+
+进入 Phase 2 前必须全部通过：
+
+- [ ] 产品方向经 CEO 六问验证（值得做 / 需调整 / 放弃）
+- [ ] PRD/Story/Card 三层文档已创建且通过 ai-workflow 验证
+- [ ] 至少 3 个功能创意来自不同视角（PM/设计/工程）
+- [ ] 高风险假设已识别（Value/Usability/Viability/Feasibility）
+- [ ] 每个高风险假设有对应验证实验方案
+
+## Timeline
+
+**预估耗时: 2-3 个工作日**
+
+```
+Day 1        │ Day 2           │ Day 3
+office-hours │ brainstorm-ideas│ identify-assumptions
+brainstorming│ ai-workflow     │ brainstorm-experiments
+             │                 │ Gate Review
+```
+
 ## 执行规则
 
 1. **顺序执行**: 必须按 1→2→3→4→5→6 顺序，不可跳过
 2. **自动流转**: 每个节点完成后立即调用下一个
-3. **新产品变体**: 如果是全新产品，Step 3/4/5 自动替换为 `-new` 后缀版本
+3. **新产品变体**: 如果是全新产品，Step 4/5/6 自动替换为 `-new` 后缀版本
 4. **错误处理**: 任一节点失败 → 报告错误，等待用户指示
+5. **Gate 关卡**: 所有 Gate Checklist 项必须通过才能进入下一 Phase
 
 ## 与其他 Chain 的关系
 

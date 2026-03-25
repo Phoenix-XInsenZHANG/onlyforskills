@@ -137,6 +137,38 @@ Skill("metrics-dashboard")
 - 指标仪表盘设计文档
 - 数据源和可视化类型定义
 
+## 测试验证层
+
+| 验证点 | 工具 | 验证内容 |
+|--------|------|---------|
+| PRD 质量 10 维度评审 | `create-prd` + `ai-workflow` | 问题陈述、成功指标、范围、技术考量等 10 维度 |
+| AC 完整性检查 | `ai-workflow` | 每个 Story 有可测试的验收标准 |
+| 指标可操作性审计 | `metrics-dashboard` | 北极星指标可追踪、输入指标有数据源 |
+| 设计评审得分 | `plan-design-review` | 多维度设计评分，目标 >= 7/10 |
+| CEO 挑战测试 | `plan-ceo-review` | 前提假设经过挑战，范围经过审视 |
+
+## Gate Checklist（出口质量关卡）
+
+进入 Phase 4 前必须全部通过：
+
+- [ ] PRD 包含问题陈述 + 成功指标 + 范围定义
+- [ ] 设计评审得分 >= 7/10（低于 7 分需迭代改进）
+- [ ] 北极星指标已定义且可追踪
+- [ ] 实施计划精确到文件路径和预期输出
+- [ ] DESIGN.md 已创建（含美学/排版/色彩/布局规范）
+- [ ] PRD/Story/Card 通过 ai-workflow 格式验证
+
+## Timeline
+
+**预估耗时: 3-5 个工作日**
+
+```
+Day 1-2              │ Day 3               │ Day 4-5
+plan-ceo-review      │ writing-plans       │ ai-workflow
+plan-design-review   │ create-prd          │ metrics-dashboard
+design-consultation  │                     │ Gate Review
+```
+
 ## 执行规则
 
 1. **顺序执行**: 必须按 1→2→3→4→5→6→7 顺序，不可跳过

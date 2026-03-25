@@ -117,6 +117,49 @@ Skill("retro")
 - 改进建议
 - 数据回流到 Phase 1 驱动下一轮迭代
 
+## 测试验证层
+
+| 验证点 | 工具 | 验证内容 |
+|--------|------|---------|
+| 发布完整性 | `ship` [gstack] | VERSION bump + CHANGELOG + PR 创建 |
+| 文档闭环 | `ai-workflow` | Card → done，PRD 版本标记 |
+| 上线数据验证 | `north-star-metric` | 北极星指标基线已设定、输入指标可追踪 |
+| 团队效能分析 | `retro` | 代码量/测试覆盖/贡献者/趋势数据 |
+
+## Gate Checklist（出口质量关卡）
+
+进入下一轮 Phase 1 前必须全部通过：
+
+- [ ] 代码已合并到主分支（ship 完成）
+- [ ] Card 状态更新为 done，PRD 标注发布版本
+- [ ] GTM 发布计划已制定（渠道/消息/时间线）
+- [ ] 北极星指标基线已设定且可追踪
+- [ ] 团队复盘完成，改进建议已记录
+- [ ] 复盘数据已准备好回流到下一轮 Phase 1
+
+## Timeline
+
+**预估耗时: 2-3 个工作日**
+
+```
+Day 1          │ Day 2              │ Day 3
+ship [gstack]  │ gtm-strategy       │ retro
+ai-workflow    │ north-star-metric  │ Gate Review
+               │                    │ → 回流 Phase 1
+```
+
+## 完整生命周期 Timeline 总览
+
+```
+Phase 1    Phase 2    Phase 3      Phase 4    Phase 5      Phase 6
+2-3d       2-3d       3-5d         2-3d       3-7d         2-3d
+|──────────|──────────|────────────|──────────|────────────|──────────|
+ 发现        战略       规格设计      工程评审    开发执行      发布复盘
+ ◆ Gate 1   ◆ Gate 2   ◆ Gate 3    ◆ Gate 4   ◆ Gate 5    ◆ Gate 6
+                                                            ↓
+总计: 14-24 个工作日                                    → 回流 Phase 1
+```
+
 ## 执行规则
 
 1. **顺序执行**: 必须按 1→2→3→4→5 顺序，不可跳过

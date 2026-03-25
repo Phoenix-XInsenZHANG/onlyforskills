@@ -92,6 +92,36 @@ Skill("ai-workflow")
 - Story → Card 关联验证通过
 - @card 引用确认
 
+## 测试验证层
+
+| 验证点 | 工具 | 验证内容 |
+|--------|------|---------|
+| INVEST 原则检查 | `user-stories` | 每个故事符合 Independent/Negotiable/Valuable/Estimable/Small/Testable |
+| Gherkin 格式验证 | `test-scenarios` | 验收标准可转化为 Given/When/Then 测试用例 |
+| 发布切片可交付性 | `writing-plans` | 每个任务 2-5 分钟，可独立交付 |
+| 架构风险暴露 | `plan-eng-review` | 隐藏技术假设全部暴露并记录 |
+
+## Gate Checklist（出口质量关卡）
+
+进入 Phase 5 前必须全部通过：
+
+- [ ] 架构选型已锁定（数据流、边界条件、性能预期）
+- [ ] 所有 User Story 符合 INVEST 原则
+- [ ] 每个 Story 有可测试的验收标准（可转 Gherkin）
+- [ ] 微任务清单精确到文件路径和函数签名
+- [ ] 技术风险清单已记录，每项有缓解方案
+- [ ] Story → Card 关联通过 ai-workflow 验证
+
+## Timeline
+
+**预估耗时: 2-3 个工作日**
+
+```
+Day 1              │ Day 2           │ Day 3
+plan-eng-review    │ user-stories    │ ai-workflow
+writing-plans      │                 │ Gate Review
+```
+
 ## 执行规则
 
 1. **顺序执行**: 必须按 1→2→3→4 顺序，不可跳过

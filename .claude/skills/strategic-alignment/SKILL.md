@@ -93,6 +93,34 @@ Skill("ai-workflow")
 - 文档更新确认
 - 缺失关联已补全
 
+## 测试验证层
+
+| 验证点 | 工具 | 验证内容 |
+|--------|------|---------|
+| 功能 ROI 分析 | `prioritize-features` | 每个功能有 Impact/Effort/Risk 评分 |
+| 竞品差异化 | `competitor-analysis` | 差异化定位有数据支撑 |
+| 文档同步 | `ai-workflow` | 战略产出已反映到 PRD/Story/Card |
+
+## Gate Checklist（出口质量关卡）
+
+进入 Phase 3 前必须全部通过：
+
+- [ ] 价值主张 6 部分完整（Who/Why/What before/How/What after/Alternatives）
+- [ ] Top 5 功能已排序，每个有 Impact/Effort/Risk 评分
+- [ ] 竞品分析覆盖至少 3 个直接竞品
+- [ ] 差异化定位明确（vs 竞品的独特优势）
+- [ ] 战略产出已通过 ai-workflow 同步到文档体系
+
+## Timeline
+
+**预估耗时: 2-3 个工作日**
+
+```
+Day 1              │ Day 2                │ Day 3
+value-proposition  │ competitor-analysis  │ ai-workflow
+prioritize-features│                      │ Gate Review
+```
+
 ## 执行规则
 
 1. **顺序执行**: 必须按 1→2→3→4 顺序，不可跳过
